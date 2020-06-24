@@ -1,0 +1,20 @@
+{
+    "invalid_request": "Oops!...I'm not quite sure what you're asking me to do :head_bandage:",
+    "coming_soon": "eh...maybe there'll be a meaningful response to this request one day ¯\\_(ツ)_/¯",
+    "got_it": "Got it :sunglasses:",
+
+    "responses_list": "Here is a list of triggers/responses I know about (if there are multiple, I'll just pick one :stuck_out_tongue_winking_eye:):",
+    "responses_none": ":thinking_face: it looks like there aren't any -- try asking for \"help\" if you're having trouble",
+    "responses_help": "I'll show you a list of trigger words and the responses that go with them",
+
+    "triggers_list": "Here is a list of triggers I know about:",
+    "triggers_none": ":thinking_face: it looks like there aren't any -- try asking for \"help\" if you're having trouble",
+    "triggers_help": "I'll show you a list of trigger words I know about",
+    "trigger_already_exists": ":zany_face: I already know about that one silly",
+
+    "add_help": "This is how you can add to the triggers/responses I know about\n  - just @ me, then say something like, \"add [trigger] | [response]\"\n  - triggers and responses can be words or phrases\n  - if there are multiple responses configured for a trigger, I'll just pick one to send back :wink:",
+    
+    "remove_help": "This is how you can remove a specific response for a trigger, or get rid of the trigger altogether\n  - just @ me, then say something like, \"remove [trigger] | [response]\"\n    - to remove a trigger entirely, just say \"remove [trigger]\"",
+
+    "error": ":rotating_light: :head_bandage: Not sure what happened, but that didn't work...\n- if you see this a lot, maybe you should reach out to my creator"
+}

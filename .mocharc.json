@@ -1,0 +1,16 @@
+{
+    "diff": true,
+    "recursive": true,
+    "color": true,
+    "sort": true,
+    "extension": ["js"],
+    "package": "./package.json",
+    "reporter": "spec",
+    "slow": 75,
+    "timeout": 2000,
+    "ui": "bdd",
+    "watch": true,
+    "watch-files": ["./**/*.js"],
+    "watch-ignore": [".git","node_modules","./node_modules/**/*"],
+    "ignore": ["./node_modules/**/*"]
+}

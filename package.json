@@ -1,0 +1,25 @@
+{
+    "name": "respondo",
+    "version": "1.0.0",
+    "description": "Discord Bot",
+    "main": "bot.js",
+    "scripts": {
+        "start": "node bot.js",
+        "test": "mocha --watch false './**/*.spec.js'",
+        "testw": "mocha --watch './**/*.spec.js'"
+    },
+    "author": "waterfausett",
+    "dependencies": {
+        "discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6",
+        "optional-require": "^1.0.0",
+        "pg": "^8.2.1",
+        "winston": "^3.3.0"
+    },
+    "devDependencies": {
+        "chai": "^4.2.0",
+        "mocha": "^8.0.1",
+        "protractor": "^7.0.0",
+        "sinon": "^9.0.2",
+        "watchify": "^3.11.1"
+    }
+}
