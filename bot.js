@@ -42,6 +42,11 @@ bot.on('message', async (user, userID, channelId, message, evt) => {
     }
 });
 
+bot.on('disconnect', function(errMsg, code) { 
+    logger.warn('Disconnected');
+    logger.warn(errMsg, code);
+});
+
 function sendMessages(channelId, messages, interval = config.simulateTyping ? 1000 : 0) {
     messages = (messages || []).slice(0, config.maximumResponsesPerMessage);
 
