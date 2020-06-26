@@ -75,13 +75,13 @@
     </div>
 </div>
 
+<script src="/javascript/trigger.api.js"></script>
 <script>
     (() => {
         $(() => ko.applyBindings(new ViewModel()));
 
         const guildId = new URLSearchParams(window.location.search).get('guildId');
         const MIN_LOADING = 250;
-        const triggerApi = '/triggers';
 
         if (!guildId) $('div#content').remove();
 
@@ -104,6 +104,16 @@
 
             self.sortColumn = ko.observable('trigger');
             self.sortAsc = ko.observable(true);
+
+            self.toggleSort = (column, event, x) => {
+                self.sortAsc(self.sortColumn() === column ? !self.sortAsc() : true);
+                self.sortColumn(column);
+
+                $(event.currentTarget).parent().find('i').removeClass((index, className) => (className.match(/\bfa-sort-\S+/g) || []).join(' '));
+                const sortIcon = $(event.currentTarget).find('i');
+                sortIcon.addClass(`fa-sort-alpha-${(self.sortAsc() ? 'asc' : 'desc')}`)
+            }
+            
             self.sortedTriggers = ko.pureComputed(() => {
                 const sortColumn = self.sortColumn();
                 const asc = self.sortAsc();
@@ -115,15 +125,6 @@
                     return sortValue * (asc ? 1 : -1);
                 });
             });
-
-            self.toggleSort = (column, event, x) => {
-                self.sortAsc(self.sortColumn() === column ? !self.sortAsc() : true);
-                self.sortColumn(column);
-
-                $(event.currentTarget).parent().find('i').removeClass((index, className) => (className.match(/\bfa-sort-\S+/g) || []).join(' '));
-                const sortIcon = $(event.currentTarget).find('i');
-                sortIcon.addClass(`fa-sort-alpha-${(self.sortAsc() ? 'asc' : 'desc')}`)
-            }
 
             self.addTrigger = async () => {
                 await Swal.fire({
@@ -155,7 +156,6 @@
                         actions: 'justify-content-end'
                     },
                     preConfirm: () => {
-                        const url = '/triggers';
                         const data = {
                             guildId: guildId,
                             trigger: document.getElementById('swal-form-trigger').value,
@@ -165,19 +165,7 @@
                         if (!data.trigger) { Swal.showValidationMessage('<code>trigger</code>&nbsp; cannot be empty!'); return false; }
                         if (!data.response) { Swal.showValidationMessage('<code>response</code>&nbsp; cannot be empty!'); return false; }
 
-                        return fetch(url, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify(data)
-                        })
-                            .then((response) => {
-                                if (!response.ok) {
-                                    throw Error(response.statusText);
-                                }
-                                return response.json();
-                            })
+                        return triggerApi.add(data)
                             .then(newObj => delay(MIN_LOADING).then(_ => self.triggers.push(newObj)))
                             .then(_ => { Toast.fire({ icon: 'success', title: 'added' }) })
                             .catch(error => Swal.showValidationMessage(`Request failed: <br/>${error}`));
@@ -187,18 +175,7 @@
 
             self.updateTrigger = (item, event) => {
                 const $btn = $(event.currentTarget);
-                const action = fetch(`${triggerApi}/${item.id}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(item)
-                }).then((response) => {
-                    if (!response.ok) {
-                        throw Error(response.statusText);
-                    }
-                    return response;
-                });
+                const action = triggerApi.update(item);
 
                 applyUXEffects(item, $btn, action)
                     .then(_ => self.triggers.valueHasMutated());
@@ -206,14 +183,7 @@
 
             self.deleteTrigger = (item) => {
                 const $btn = $(event.currentTarget);
-                const action = fetch(`${triggerApi}/${item.id}`, {
-                    method: 'DELETE'
-                }).then((response) => {
-                    if (!response.ok) {
-                        throw Error(response.statusText);
-                    }
-                    return response;
-                });
+                const action = triggerApi.delete(item);
 
                 applyUXEffects(item, $btn, action)
                     .then(_ => self.triggers.remove(x => x.id === item.id));
