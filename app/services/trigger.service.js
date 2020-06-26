@@ -67,7 +67,7 @@ module.exports = {
     },
 
     addResponse: async (guildId, trigger, response) => {
-        let res = { isAllowed: true };
+        let res = { isAllowed: true }; // TODO: have this guy just throw an error
 
         try {
             const insertResult = await executeQuery(`INSERT INTO "TriggerResponses" (trigger, response, "guildId") VALUES ('${sqlClean(trigger)}', '${sqlClean(response)}', '${guildId}') RETURNING id`);

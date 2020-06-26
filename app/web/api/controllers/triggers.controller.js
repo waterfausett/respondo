@@ -12,9 +12,15 @@ router.get('/triggers', async (req, res, next) => {
 /* POST a trigger */
 router.post('/triggers', async (req, res, next) => {
     const addObj = req.body;
-    const { id } = await triggerService.addResponse(addObj.guildId, addObj.trigger, addObj.response);
-    const newObj = Object.assign({id}, addObj);
-    res.status(201).json(newObj);
+    const { isAllowed, id } = await triggerService.addResponse(addObj.guildId, addObj.trigger, addObj.response);
+    if (isAllowed) {
+        const newObj = Object.assign({id}, addObj);
+        res.status(201).json(newObj);
+        }
+    else {
+        res.statusMessage = 'Trigger/Response combo already exists!';
+        res.status(409).end();
+    }
 });
 
 /* PUT a trigger */
