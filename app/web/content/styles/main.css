@@ -24,12 +24,6 @@ body {
     cursor: not-allowed;
 }
 
-.truncate {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
 .invis { display:none; }
 
 .emoji { font-size: 18pt; vertical-align: sub; }
