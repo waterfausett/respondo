@@ -37,7 +37,7 @@ bot.on('message', async (user, userID, channelId, message, evt) => {
     
         sendMessages(channelId, responseMessages);
     } catch (error) {
-        logger.error('Failed to process a message', {message, error});
+        logger.error('Failed to process a message: ', {message, error});
         sendMessages(channelId, [{message: strings.error}]);
     }
 });
