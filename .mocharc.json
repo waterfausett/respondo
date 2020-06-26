@@ -10,7 +10,7 @@
     "timeout": 2000,
     "ui": "bdd",
     "watch": true,
-    "watch-files": ["./**/*.js"],
+    "watch-files": ["./app/**/*.js"],
     "watch-ignore": [".git","node_modules","./node_modules/**/*"],
     "ignore": ["./node_modules/**/*"]
 }

@@ -5,8 +5,8 @@
     "main": "bot.js",
     "scripts": {
         "start": "node bot.js",
-        "test": "mocha --watch false './**/*.spec.js'",
-        "testw": "mocha --watch './**/*.spec.js'"
+        "test": "mocha --watch false './app/**/*.spec.js'",
+        "testw": "mocha --watch './app/**/*.spec.js'"
     },
     "author": "waterfausett",
     "dependencies": {
