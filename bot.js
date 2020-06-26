@@ -3,7 +3,7 @@ const Discord = require('discord.io');
 const logger = require('./app/logger');
 const config = require('./app/configuration/bot-config.json');
 const auth = optionalRequire('./app/configuration/auth.json') || {};
-
+const strings = require('./app/configuration/strings.json');
 const BotMessageHandler = require('./app/bot/message-handlers/bot-message-handler');
 const ResponseMessageHandler = require('./app/bot/message-handlers/response-message-handler');
 
