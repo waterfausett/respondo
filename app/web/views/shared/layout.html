@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <%- include('header.html') %>
+</head>
+
+<body>
+    <div class="main-content">
+        <%- include('nav.html') %>
+        <script type="text/javascript">
+            $(".nav").find(".active").removeClass("active");
+            $("<%- activeTabClass %>").addClass("active");
+        </script>
+
+        <div class="content-wrapper">
+            <%- body %>
+        </div>        
+
+        <%- include('footer.html') %>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+        // Loading button plugin (removed from BS4)
+        (function($) {
+            $.fn.button = function(action) {
+                if (action === 'loading' && this.data('loading-text')) {
+                    this.data('original-text', this.html()).html(this.data('loading-text')).prop('disabled', true);
+                }
+                if (action === 'reset' && this.data('original-text')) {
+                    this.html(this.data('original-text')).prop('disabled', false);
+                }
+            };
+        }(jQuery));
+
+        function delay(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script>
+        $(() => {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+                onOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+
+            window.Toast = Toast;
+        });
+    </script>
+</body>
+</html>

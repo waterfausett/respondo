@@ -52,9 +52,9 @@ async function getResponses(guildId) {
 }
 
 async function addResponse(guildId, args) {
-    const allowed = await triggerService.addResponse(guildId, args[0], args[1]);
+    const { isAllowed } = await triggerService.addResponse(guildId, args[0], args[1]);
 
-    return allowed
+    return isAllowed
         ? [{message: strings.got_it}]
         : [{message: strings.trigger_already_exists}];
 }

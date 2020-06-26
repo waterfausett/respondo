@@ -79,7 +79,7 @@ describe('bot-message-handler', () => {
         it('should add response', async () => {
             // Arrange
             const message = "add hello | world";
-            mockTriggerService.expects('addResponse').returns(true);
+            mockTriggerService.expects('addResponse').returns({isAllowed: true});
             
             // Act
             const response = await BotMessageHandler.handleMessage(message, _guildId);
@@ -92,7 +92,7 @@ describe('bot-message-handler', () => {
         it('should fail for duplicates', async () => {
             // Arrange
             const message = 'add hello | world';
-            mockTriggerService.expects('addResponse').returns(false);
+            mockTriggerService.expects('addResponse').returns({isAllowed: false});
 
             // Act
             const response = await BotMessageHandler.handleMessage(message, _guildId);

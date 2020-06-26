@@ -1,0 +1,211 @@
+html,
+body {
+    height: 100vh;
+}
+
+.main-content {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.content-wrapper {
+    flex-grow: 1;
+}
+
+#footer {
+    padding: 10px 20px;
+    border-top: 1px solid #e7eaec;
+    color: #676a6c;
+}
+
+:disabled {
+    cursor: not-allowed;
+}
+
+.truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.invis { display:none; }
+
+.emoji { font-size: 18pt; vertical-align: sub; }
+
+.box-shadow { box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important; }
+
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.header { font-size: 1.45em; }
+
+img.click-zoom {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+
+    transition: all 0.25s ease;
+    transition: all 0.25s ease;
+    transition: all 0.25s ease;
+
+    cursor: zoom-in;
+}
+
+img.click-zoom:active {
+    overflow: hidden;
+    
+    -webkit-transform: scale(2);
+    -moz-transform: scale(2);
+    transform: scale(2);
+    
+    cursor: none;
+}
+
+.click-zoom-wrapper {
+    border:1px solid transparent;
+    overflow: hidden;
+    
+    border-radius: 7px;
+    position: relative;
+    z-index: 1;
+}
+
+.fast-spin {
+    -webkit-animation: fa-spin 1s infinite linear;
+    animation: fa-spin 1s infinite linear;
+}
+
+input.inline-edit:focus {
+    background: white !important;
+}
+
+input.inline-edit:not(.focus) {
+    border: none;
+    background: inherit;
+}
+
+
+.error-messages div {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-radius: 5px;
+    margin: 8px;
+}
+    .error-messages div p {
+        margin-bottom: 0;
+    }
+.error-messages div:nth-child(odd) {
+    background-color: #eeeeeece;
+}
+.error-messages div:nth-child(even) {
+    background-color: #dddddd;
+    background-color: #eeeece;
+}
+
+.sort-toggle {
+    cursor: pointer;
+}
+
+.flex-center {
+    display: flex;
+    z-index: 1;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+.justify-content-end {
+    justify-content: end;
+}
+
+.no-select {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+  }
+
+/* Side notes for calling out things
+-------------------------------------------------- */
+
+/* Base styles (regardless of theme) */
+.bs-callout {
+    margin: 20px 0;
+    padding: 15px 30px 15px 15px;
+    border-left: 5px solid #eee;
+}
+.bs-callout h4 {
+    margin-top: 0;
+}
+.bs-callout p:last-child {
+    margin-bottom: 0;
+}
+.bs-callout code,
+.bs-callout .highlight {
+    background-color: #fff;
+}
+
+/* Themes for different contexts */
+.bs-callout-danger {
+    background-color: #fcf2f2;
+    border-color: #dFb5b4;
+}
+.bs-callout-warning {
+    background-color: #fefbed;
+    border-color: #f1e7bc;
+}
+.bs-callout-info {
+    background-color: #f0f7fd;
+    border-color: #d0e3f0;
+}
+
+.bd-callout {
+    padding: 1.25rem;
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid #eee;
+    border-left-width: .25rem;
+    border-radius: .25rem;
+}
+
+.bd-callout+.bd-callout {
+    margin-top: -.25rem;
+}
+
+.bd-callout h4 {
+    margin-top: 0;
+    margin-bottom: .25rem;
+}
+.bd-callout p:last-child {
+    margin-bottom: 0;
+}
+.bd-callout code,
+.bd-callout .highlight {
+    background-color: #fff;
+}
+
+.bd-callout-info {
+    border-left-color: #5bc0de;
+}
+.bd-callout-info h4 {
+    color: #5bc0de;
+}
+
+.bd-callout-warning {
+    border-left-color: #f0ad4e;
+}
+.bd-callout-warning h4 {
+    color: #f0ad4e;
+}
+
+.bd-callout-danger {
+    border-left-color: #d9534f;
+}
+  
+.bd-callout-danger h4 {
+    color: #d9534f;
+}
