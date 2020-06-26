@@ -16,7 +16,7 @@ module.exports = {
                 return cleanMessage.match(triggerPattern);
             })
             .forEach(key => {
-                const randomResponse = guildResponses[key].responses[Math.floor(Math.random() * guildResponses[key].responses.length)];
+                const randomResponse = guildResponses[key][Math.floor(Math.random() * guildResponses[key].length)];
                 responseMessages.push({message: randomResponse});
             });
 

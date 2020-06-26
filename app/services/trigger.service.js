@@ -52,10 +52,8 @@ module.exports = {
             const result = await executeQuery(`SELECT id, trigger, response FROM "TriggerResponses" WHERE "guildId" = '${guildId}' ORDER BY trigger`);
             const results = (result) 
                 ? result.rows.reduce((obj, v) => {
-                    obj[v.trigger] = (obj[v.trigger] || {});
-                    obj[v.trigger].id = obj.id;
-                    obj[v.trigger].responses = obj[v.trigger].responses || [];
-                    obj[v.trigger].responses.push(v.response);
+                    obj[v.trigger] = (obj[v.trigger] || []);
+                    obj[v.trigger].push(v.response);
                     return obj;
                 }, {})
                 : {};

@@ -10,31 +10,19 @@ const _guildId = 'guild1';
 
 describe('response-message-handler', () => {
     const guildConfig = {
-        'trigger1': {
-            id: 1,
-            responses: [
-                'trigger1_response1'
-            ]
-        },
-        'trigger2': {
-            id: 2,
-            responses: [
-                'trigger2_response1'
-            ]
-        },
-        'trigger3': {
-            id: 3,
-            responses: [
-                'trigger3_response1',
-                'trigger3_response2'
-            ]
-        },
-        'trigger that is a phrase': {
-            id: 4,
-            responses: [
-                'trigger_phrase_response1'
-            ]
-        }
+        'trigger1': [
+            'trigger1_response1'
+        ],
+        'trigger2': [
+            'trigger2_response1'
+        ],
+        'trigger3': [
+            'trigger3_response1',
+            'trigger3_response2'
+        ],
+        'trigger that is a phrase': [
+            'trigger_phrase_response1'
+        ]
     };
 
     beforeEach(() => {
@@ -102,6 +90,6 @@ describe('response-message-handler', () => {
         // Assert
         assert.ok(messages);
         expect(messages.length).equal(1);
-        expect(guildConfig[trigger].responses).contains(messages[0].message);
+        expect(guildConfig[trigger]).contains(messages[0].message);
     });
 });

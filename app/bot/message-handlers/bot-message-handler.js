@@ -34,7 +34,7 @@ async function getResponses(guildId) {
             value: '',
             inline: false
         };
-        guildResponses[key].responses.forEach(response => {
+        guildResponses[key].forEach(response => {
             const isLink = response.toLowerCase().startsWith('http');
             field.value += isLink
                 ? `- <${response}>\n`
