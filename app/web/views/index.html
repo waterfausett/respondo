@@ -77,11 +77,11 @@
 
 <script>
     (() => {
+        $(() => ko.applyBindings(new ViewModel()));
+
         const guildId = new URLSearchParams(window.location.search).get('guildId');
         const MIN_LOADING = 250;
         const triggerApi = '/triggers';
-
-        ko.applyBindings(new ViewModel());
 
         if (!guildId) $('div#content').remove();
 
@@ -179,12 +179,7 @@
                                 return response.json();
                             })
                             .then(newObj => delay(MIN_LOADING).then(_ => self.triggers.push(newObj)))
-                            .then(_ => {
-                                Toast.fire({
-                                    icon: 'success',
-                                    title: 'added'
-                                })
-                            })
+                            .then(_ => { Toast.fire({ icon: 'success', title: 'added' }) })
                             .catch(error => Swal.showValidationMessage(`Request failed: <br/>${error}`));
                     }
                 });
@@ -247,16 +242,8 @@
                         $submitter.button('reset');
                     }
                 })
-                .then(_ =>
-                    $formRow.find('button[value="save"]')
-                        .prop('disabled', true))
-                .then(_ => {
-                    Toast.fire({
-                        icon: 'success',
-                        title: 'got it'
-                    })
-
-                })
+                .then(_ => $formRow.find('button[value="save"]').prop('disabled', true))
+                .then(_ => { Toast.fire({ icon: 'success', title: 'got it' }) })
                 .catch(error => {
                     $formInputs.prop('disabled', false);
                     $submitter.button('reset');
