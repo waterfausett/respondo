@@ -75,7 +75,6 @@ describe('response-message-handler', () => {
 
     [
         { message: 'trigger1', expectedResponses: ['trigger1_response1'] },
-        { message: 'trigger1 ', expectedResponses: ['trigger1_response1'] },
         { message: 'trigger2', expectedResponses: ['trigger2_response1'] },
         { message: 'trigger that is a phrase', expectedResponses: ['trigger_phrase_response1'] },
         { message: 'trigger1 trigger2', expectedResponses: ['trigger1_response1', 'trigger2_response1'] },
@@ -103,6 +102,6 @@ describe('response-message-handler', () => {
         // Assert
         assert.ok(messages);
         expect(messages.length).equal(1);
-        expect(guildConfig[trigger]).contains(messages[0].message);
+        expect(guildConfig[trigger].responses).contains(messages[0].message);
     });
 });
