@@ -11,19 +11,31 @@ const _guildId = 'guild1';
 
 describe('bot-message-handler', () => {
     const guildConfig = {
-        'trigger1': [
-            'trigger1_response1'
-        ],
-        'trigger2': [
-            'trigger2_response1'
-        ],
-        'trigger3': [
-            'trigger3_response1',
-            'trigger3_response2'
-        ],
-        'trigger that is a phrase': [
-            'trigger_phrase_response1'
-        ]
+        'trigger1': {
+            id: 1,
+            responses: [
+                'trigger1_response1'
+            ]
+        },
+        'trigger2': {
+            id: 3,
+            responses: [
+                'trigger2_response1'
+            ]
+        },
+        'trigger3': {
+            id: 4,
+            responses: [
+                'trigger3_response1',
+                'trigger3_response2'
+            ]
+        },
+        'trigger that is a phrase': {
+            id: 5,
+            responses: [
+                'trigger_phrase_response1'
+            ]
+        }
     };
     let guildTriggers = {
         'trigger1': 1,

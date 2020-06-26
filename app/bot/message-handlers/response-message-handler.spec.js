@@ -17,20 +17,20 @@ describe('response-message-handler', () => {
             ]
         },
         'trigger2': {
-            id: 1,
+            id: 2,
             responses: [
                 'trigger2_response1'
             ]
         },
         'trigger3': {
-            id: 1,
+            id: 3,
             responses: [
                 'trigger3_response1',
                 'trigger3_response2'
             ]
         },
         'trigger that is a phrase': {
-            id: 1,
+            id: 4,
             responses: [
                 'trigger_phrase_response1'
             ]
