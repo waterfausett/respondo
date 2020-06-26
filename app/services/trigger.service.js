@@ -26,7 +26,7 @@ module.exports = {
             const result = await executeQuery(`SELECT id, trigger, response FROM "TriggerResponses" WHERE "guildId" = '${guildId}' ORDER BY trigger`);
             return result ? result.rows : [];
         } catch (err) {
-            logger.error(`${TAG}::getResponses:`, err);
+            logger.error(`${TAG}::getRows:`, err);
             throw err;
         }
     },
@@ -117,7 +117,7 @@ module.exports = {
         try {
             await executeQuery(`DELETE FROM "TriggerResponses" WHERE id = ${id}`);
         } catch (err) {
-            logger.error(`${TAG}::removeTrigger:`, err);
+            logger.error(`${TAG}::remove:`, err);
             throw err;
         }
     }
