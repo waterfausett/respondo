@@ -19,7 +19,7 @@
     </div>
 </div>
 
-<div class="container-fluid invis" data-bind="css: { invis: !guildId }">
+<div id="content" class="container-fluid invis" data-bind="css: { invis: !guildId }">
     <div class="bd-callout bd-callout-info">
         <h5>Configuring <code>Triggers</code> and <code>Resopnses</code></h5>
         <p>
@@ -79,6 +79,8 @@
 
         ko.applyBindings(new ViewModel());
 
+        if (!guildId) $('div#content').remove();
+
         $('table#data-table').on('input', 'input', (event) => {
             const $targetRow = $(event.target).parents('tr[data-id]');
             $targetRow
@@ -87,7 +89,6 @@
 
             $targetRow.addClass('dirty');
         });
-
 
         function ViewModel()
         {
