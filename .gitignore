@@ -115,7 +115,5 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-# response-config
-configuration/response-config.json
 # auth config
-configuration/auth.json
+app/configuration/auth.json
