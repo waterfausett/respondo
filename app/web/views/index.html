@@ -7,7 +7,19 @@
     }
 </style>
 
-<div class="container-fluid">
+<div class="container-fluid invis" data-bind="css: { invis: guildId }">
+    <div class="bd-callout bd-callout-danger">
+        <h5>Configuring <code>Triggers</code> and <code>Resopnses</code></h5>
+        <p>
+            A <code>guildId</code> is required!
+        </p>
+        <p>
+            Please supply a valid <code>guildId</code> as a query parameter.
+        </p>
+    </div>
+</div>
+
+<div class="container-fluid invis" data-bind="css: { invis: !guildId }">
     <div class="bd-callout bd-callout-info">
         <h5>Configuring <code>Triggers</code> and <code>Resopnses</code></h5>
         <p>
@@ -80,6 +92,8 @@
         function ViewModel()
         {
             const self = this;
+
+            self.guildId = guildId;
 
             self.triggers = ko.observableArray(<%- JSON.stringify(data) %>);
 
