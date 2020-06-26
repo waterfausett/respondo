@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const triggerService = require('../../../../services/trigger.service');
+const triggerService = require('../../../services/trigger.service');
 
 /* GET triggers */
 router.get('/triggers', async (req, res, next) => {

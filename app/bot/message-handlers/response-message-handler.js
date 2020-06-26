@@ -1,4 +1,4 @@
-const triggerService = require('../services/trigger.service');
+const triggerService = require('../../services/trigger.service');
 
 function escapeRegExp(str) {
     return str.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');

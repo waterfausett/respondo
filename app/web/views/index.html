@@ -115,12 +115,12 @@
                             <div class="form-group row">
                                 <label for="swal-form-trigger" class="col-sm-3 col-form-label">Trigger:</label>
                                 <div class="col-sm-9">
-                                    <input id="swal-form-trigger" type="text" class="form-control" placeholder="hello" aria-label="Trigger">
+                                    <input id="swal-form-trigger" type="text" class="form-control" placeholder="hello" aria-label="Trigger" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="swal-form-response">Response:</label>
-                                <textarea id="swal-form-response" type="text" class="form-control" placeholder="world" aria-label="Response"></textarea>
+                                <textarea id="swal-form-response" type="text" class="form-control" placeholder="world" aria-label="Response" required></textarea>
                             </div>
                         </div>
                         <hr/>
@@ -142,6 +142,9 @@
                             trigger: document.getElementById('swal-form-trigger').value,
                             response: document.getElementById('swal-form-response').value
                         };
+
+                        if (!data.trigger) { Swal.showValidationMessage('<code>trigger</code>&nbsp; cannot be empty!'); return false; }
+                        if (!data.response) { Swal.showValidationMessage('<code>response</code>&nbsp; cannot be empty!'); return false; }
 
                         return fetch(url, {
                             method: 'POST',

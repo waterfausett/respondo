@@ -2,9 +2,9 @@ const sinon = require('sinon');
 const assert = require('assert');
 const { expect } = require('chai');
 
-const BotMessageHandler = require('./../message-handlers/bot-message-handler');
-const triggerService = require('../services/trigger.service');
-const strings = require('./../configuration/strings.json');
+const BotMessageHandler = require('./bot-message-handler');
+const triggerService = require('../../services/trigger.service');
+const strings = require('../../configuration/strings.json');
 
 let sandbox = sinon.createSandbox();
 const _guildId = 'guild1';
