@@ -4,8 +4,8 @@ const logger = require('./app/logger');
 const config = require('./app/configuration/bot-config.json');
 const auth = optionalRequire('./app/configuration/auth.json') || {};
 const strings = require('./app/configuration/strings.json');
-const BotMessageHandler = require('./app/bot/message-handlers/bot-message-handler');
-const ResponseMessageHandler = require('./app/bot/message-handlers/response-message-handler');
+const BotMessageHandler = require('./app/message-handlers/bot-message-handler');
+const ResponseMessageHandler = require('./app/message-handlers/response-message-handler');
 
 // Initialize Discord Bot
 var bot = new Discord.Client({

@@ -3,7 +3,7 @@ const assert = require('assert');
 const { expect } = require('chai');
 
 const ResponseMessageHandler = require('./response-message-handler');
-const triggerService = require('../../services/trigger.service');
+const triggerService = require('../services/trigger.service');
 
 let sandbox = sinon.createSandbox();
 const _guildId = 'guild1';
