@@ -1,8 +1,8 @@
 const optionalRequire = require("optional-require")(require);
 const Discord = require('discord.io');
-const logger = require('./app/logger');
-const config = require('./app/configuration/bot-config.json');
-const auth = optionalRequire('./app/configuration/auth.json') || {};
+const logger = require('./app/services/logger.service');
+const config = require('./app/configuration/bot.config.json');
+const auth = optionalRequire('./app/configuration/auth.config.json') || {};
 const strings = require('./app/configuration/strings.json');
 const BotMessageHandler = require('./app/message-handlers/bot-message-handler');
 const ResponseMessageHandler = require('./app/message-handlers/response-message-handler');
