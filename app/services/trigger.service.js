@@ -1,4 +1,4 @@
-const logger = require('../logger');
+const logger = require('./logger.service');
 const TAG = 'Trigger.service';
 
 const { Pool } = require('pg');

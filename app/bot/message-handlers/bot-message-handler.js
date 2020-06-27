@@ -1,5 +1,5 @@
 const strings = require('../../configuration/strings.json');
-const logger = require('../../logger');
+const logger = require('../../services/logger.service');
 const triggerService = require('../../services/trigger.service');
 
 async function getTriggers(guildId) {
