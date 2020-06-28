@@ -52,7 +52,7 @@ async function getResponses(guildId) {
 }
 
 async function addResponse(guildId, args) {
-    const { isAllowed } = await triggerService.addResponse(guildId, args[0], args[1]);
+    const { isAllowed } = await triggerService.addResponse(guildId, args[0].toLowerCase(), args[1]);
 
     return isAllowed
         ? [{message: strings.got_it}]
@@ -60,7 +60,7 @@ async function addResponse(guildId, args) {
 }
 
 async function removeTrigger(guildId, trigger) {
-    await triggerService.removeTrigger(guildId, trigger);
+    await triggerService.removeTrigger(guildId, trigger.toLowerCase());
 
     return [{message: strings.got_it}];
 }
@@ -71,7 +71,7 @@ async function removeResponse(guildId, args) {
         return removeTrigger(guildId, args[0]);
     }
 
-    await triggerService.removeResponse(guildId, args[0], args[1]);
+    await triggerService.removeResponse(guildId, args[0].toLowerCase(), args[1]);
 
     return [{message: strings.got_it}];
 }

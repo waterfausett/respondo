@@ -76,17 +76,18 @@ describe('bot-message-handler', () => {
     });
 
     describe('addResponse', () => {
-        it('should add response', async () => {
-            // Arrange
-            const message = "add hello | world";
-            mockTriggerService.expects('addResponse').returns({isAllowed: true});
-            
-            // Act
-            const response = await BotMessageHandler.handleMessage(message, _guildId);
+        ['add hello | world', 'AdD hello | world', 'add HeLlo | world'].forEach((message) => {
+            it('should add response', async () => {
+                // Arrange
+                mockTriggerService.expects('addResponse').withArgs(_guildId, 'hello').returns({isAllowed: true});
+                
+                // Act
+                const response = await BotMessageHandler.handleMessage(message, _guildId);
 
-            // Assert
-            assert.ok(response);
-            expect(response).deep.includes({message: strings.got_it});
+                // Assert
+                assert.ok(response);
+                expect(response).deep.includes({message: strings.got_it});
+            });
         });
 
         it('should fail for duplicates', async () => {
@@ -104,35 +105,37 @@ describe('bot-message-handler', () => {
     });
 
     describe('removeResponse', () => {
-        it('should remove response', async () => {
-            // Arrange
-            const message = 'remove hello | world';
-            mockTriggerService.expects('removeResponse');
-            mockTriggerService.expects('removeTrigger').never();
-            
-            // Act
-            const response = await BotMessageHandler.handleMessage(message, _guildId);
+        ['remove hello | world', 'ReMoVe hello | world', 'remove HeLlo | world'].forEach((message) => {
+            it('should remove response', async () => {
+                // Arrange
+                mockTriggerService.expects('removeResponse').withArgs(_guildId, 'hello');
+                mockTriggerService.expects('removeTrigger').never();
+                
+                // Act
+                const response = await BotMessageHandler.handleMessage(message, _guildId);
 
-            // Assert
-            assert.ok(response);
-            expect(response).deep.includes({message: strings.got_it});
+                // Assert
+                assert.ok(response);
+                expect(response).deep.includes({message: strings.got_it});
 
+            });
         });
     });
 
     describe('removeTrigger', () => {
-        it('should remove trigger', async () => {
-            // Arrange
-            const message = 'remove hello';
-            mockTriggerService.expects('removeTrigger');
-            mockTriggerService.expects('removeResponse').never();
-            
-            // Act
-            const response = await BotMessageHandler.handleMessage(message, _guildId);
-
-            // Assert
-            assert.ok(response);
-            expect(response).deep.includes({message: strings.got_it});
+        ['remove hello', 'ReMoVe hello', 'remove HeLlo'].forEach((message) => {
+            it('should remove trigger', async () => {
+                // Arrange
+                mockTriggerService.expects('removeTrigger').withArgs(_guildId, 'hello');
+                mockTriggerService.expects('removeResponse').never();
+                
+                // Act
+                const response = await BotMessageHandler.handleMessage(message, _guildId);
+    
+                // Assert
+                assert.ok(response);
+                expect(response).deep.includes({message: strings.got_it});
+            });
         });
     });
 });

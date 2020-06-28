@@ -68,7 +68,7 @@ module.exports = {
         let res = { isAllowed: true }; // TODO: have this guy just throw an error
 
         try {
-            const insertResult = await executeQuery(`INSERT INTO "TriggerResponses" (trigger, response, "guildId") VALUES ('${sqlClean(trigger.toLowerCase())}', '${sqlClean(response)}', '${guildId}') RETURNING id`);
+            const insertResult = await executeQuery(`INSERT INTO "TriggerResponses" (trigger, response, "guildId") VALUES ('${sqlClean(trigger)}', '${sqlClean(response)}', '${guildId}') RETURNING id`);
             res.id = insertResult.rows[0].id;
         } catch (err) {
             if (err && err.constraint === 'UX_Trigger_Response_GuildId') {
@@ -98,24 +98,6 @@ module.exports = {
             await executeQuery(`DELETE FROM "TriggerResponses" WHERE "guildId" = '${guildId}' AND trigger = '${sqlClean(trigger)}'`);
         } catch (err) {
             logger.error(`${TAG}::removeTrigger:`, err);
-            throw err;
-        }
-    },
-
-    update: async (id, obj) => {
-        try {
-            await executeQuery(`UPDATE "TriggerResponses" SET trigger = '${sqlClean(obj.trigger)}', response = '${sqlClean(obj.response)}' WHERE id = ${id}`);
-        } catch (err) {
-            logger.error(`${TAG}::updateTrigger:`, err);
-            throw err;
-        }
-    },
-
-    remove: async (id) => {
-        try {
-            await executeQuery(`DELETE FROM "TriggerResponses" WHERE id = ${id}`);
-        } catch (err) {
-            logger.error(`${TAG}::remove:`, err);
             throw err;
         }
     }
