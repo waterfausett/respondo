@@ -23,7 +23,11 @@ async function executeQuery(query) {
 module.exports = {
     getRows: async (guildId) => {
         try {
-            const result = await executeQuery(`SELECT id, trigger, response FROM "TriggerResponses" WHERE "guildId" = '${guildId}' ORDER BY trigger`);
+            const result = await executeQuery({
+                name: 'triggers-getall',
+                text: `SELECT id, trigger, response FROM "TriggerResponses" WHERE "guildId" = $1 ORDER BY trigger`,
+                values: [guildId]
+            });
             return result ? result.rows : [];
         } catch (err) {
             logger.error(`${TAG}::getRows:`, err);
@@ -33,7 +37,11 @@ module.exports = {
 
     getTriggers: async (guildId) => {
         try {
-            const result = await executeQuery(`SELECT trigger FROM "TriggerResponses" WHERE "guildId" = '${guildId}' ORDER BY trigger`);
+            const result = await executeQuery({
+                name: 'triggers-getCount',
+                text: `SELECT trigger FROM "TriggerResponses" WHERE "guildId" = $1 ORDER BY trigger`,
+                values: [guildId]
+            });
             const results = (result) 
                 ? result.rows.reduce((obj, v) => {
                     obj[v.trigger] = (obj[v.trigger] || 0) + 1;
@@ -49,7 +57,11 @@ module.exports = {
 
     getResponses: async (guildId) => {
         try {
-            const result = await executeQuery(`SELECT id, trigger, response FROM "TriggerResponses" WHERE "guildId" = '${guildId}' ORDER BY trigger`);
+            const result = await executeQuery({
+                name: 'triggers-getResponses',
+                text: `SELECT id, trigger, response FROM "TriggerResponses" WHERE "guildId" = $1 ORDER BY trigger`,
+                values: [guildId]
+            });
             const results = (result) 
                 ? result.rows.reduce((obj, v) => {
                     obj[v.trigger] = (obj[v.trigger] || []);
@@ -66,7 +78,11 @@ module.exports = {
 
     addResponse: async (guildId, trigger, response) => {
         try {
-            const insertResult = await executeQuery(`INSERT INTO "TriggerResponses" (trigger, response, "guildId") VALUES ('${sqlClean(trigger)}', '${sqlClean(response)}', '${guildId}') RETURNING id`);
+            const insertResult = await executeQuery({
+                name: 'triggers-add-response',
+                text: `INSERT INTO "TriggerResponses" (trigger, response, "guildId") VALUES ($1, $2, $3) RETURNING id`,
+                values: [sqlClean(trigger), sqlClean(response), guildId]
+            });
             return insertResult.rows[0].id;
         } catch (err) {
             if (err && err.constraint === 'UX_Trigger_Response_GuildId') {
@@ -81,7 +97,11 @@ module.exports = {
 
     removeResponse: async (guildId, trigger, response) => {
         try {
-            await executeQuery(`DELETE FROM "TriggerResponses" WHERE "guildId" = '${guildId}' AND trigger = '${sqlClean(trigger)}' AND response = '${sqlClean(response)}'`);
+            await executeQuery({
+                name: 'triggers-removeResponse',
+                text: `DELETE FROM "TriggerResponses" WHERE "guildId" = $1 AND trigger = $2 AND response = $3`,
+                values: [guildId, sqlClean(trigger), sqlClean(response)]
+            });
         } catch (err) {
             logger.error(`${TAG}::removeResponse:`, err);
             throw err;
@@ -90,7 +110,11 @@ module.exports = {
 
     removeTrigger: async (guildId, trigger) => {
         try {
-            await executeQuery(`DELETE FROM "TriggerResponses" WHERE "guildId" = '${guildId}' AND trigger = '${sqlClean(trigger)}'`);
+            await executeQuery({
+                name: 'triggers-removeTrigger',
+                text: `DELETE FROM "TriggerResponses" WHERE "guildId" = $1 AND trigger = $2`,
+                values: [guildId, sqlClean(trigger)]
+            });
         } catch (err) {
             logger.error(`${TAG}::removeTrigger:`, err);
             throw err;
