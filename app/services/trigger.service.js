@@ -68,7 +68,7 @@ module.exports = {
         let res = { isAllowed: true }; // TODO: have this guy just throw an error
 
         try {
-            const insertResult = await executeQuery(`INSERT INTO "TriggerResponses" (trigger, response, "guildId") VALUES ('${sqlClean(trigger)}', '${sqlClean(response)}', '${guildId}') RETURNING id`);
+            const insertResult = await executeQuery(`INSERT INTO "TriggerResponses" (trigger, response, "guildId") VALUES ('${sqlClean(trigger.toLowerCase())}', '${sqlClean(response)}', '${guildId}') RETURNING id`);
             res.id = insertResult.rows[0].id;
         } catch (err) {
             if (err && err.constraint === 'UX_Trigger_Response_GuildId') {

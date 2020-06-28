@@ -12,7 +12,7 @@ module.exports = {
         const responseMessages = [];
         keys
             .filter(key => {
-                const triggerPattern = new RegExp(`(^|\\W)${escapeRegExp(key)}($|\\W)`)
+                const triggerPattern = new RegExp(`(^|\\W)${escapeRegExp(key.toLowerCase())}($|\\W)`)
                 return cleanMessage.match(triggerPattern);
             })
             .forEach(key => {

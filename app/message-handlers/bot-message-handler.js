@@ -111,7 +111,7 @@ module.exports = {
         const args = message.split(' ');
         const cmd = args.shift();
     
-        const cmdArgs = args.join(' ').split('|').map(x => x.trim().toLowerCase());
+        const cmdArgs = args.join(' ').split('|').map(x => x.trim());
 
         switch (cmd.trim().toUpperCase()) {
             case 'HELP':

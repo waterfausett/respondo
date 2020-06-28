@@ -20,6 +20,9 @@ describe('response-message-handler', () => {
             'trigger3_response1',
             'trigger3_response2'
         ],
+        'trigGeR4': [
+            'trigger4_ReSpOnSe1'
+        ],
         'trigger that is a phrase': [
             'trigger_phrase_response1'
         ]
@@ -37,7 +40,8 @@ describe('response-message-handler', () => {
         assert.ok(ResponseMessageHandler);
     });
 
-    ['trigger1', ' trigger1 ', 'trigger1?', 'trigger1 test', 'test trigger1', 'another trigger1 test', 'some-trigger1', 'trigger1-thing', 'this is a trigger that is a phrase, bet you did not see that comeing']
+    ['trigger1', ' trigger1 ', 'trigger1?', 'trigger1 test', 'test trigger1', 'another trigger1 test', 'trigger4',
+    'TRIGGER1', 'TrIGgEr1', 'some-trigger1', 'trigger1-thing', 'this is a trigger that is a phrase, bet you did not see that comeing']
         .forEach((message) => {
             it(`should recognize triggers: ${message}`, async () => {
                 // Act
@@ -66,6 +70,7 @@ describe('response-message-handler', () => {
         { message: 'trigger2', expectedResponses: ['trigger2_response1'] },
         { message: 'trigger that is a phrase', expectedResponses: ['trigger_phrase_response1'] },
         { message: 'trigger1 trigger2', expectedResponses: ['trigger1_response1', 'trigger2_response1'] },
+        { message: 'trigger4', expectedResponses: ['trigger4_ReSpOnSe1'] },
     ]
     .forEach((testInput) => {
         it(`should return an appropriate response: ${testInput.message}`, async () => {
