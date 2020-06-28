@@ -65,23 +65,18 @@ module.exports = {
     },
 
     addResponse: async (guildId, trigger, response) => {
-        let res = { isAllowed: true }; // TODO: have this guy just throw an error
-
         try {
             const insertResult = await executeQuery(`INSERT INTO "TriggerResponses" (trigger, response, "guildId") VALUES ('${sqlClean(trigger)}', '${sqlClean(response)}', '${guildId}') RETURNING id`);
-            res.id = insertResult.rows[0].id;
+            return insertResult.rows[0].id;
         } catch (err) {
             if (err && err.constraint === 'UX_Trigger_Response_GuildId') {
                 logger.warn(`${TAG}::addResponse:`, err);
-                res.isAllowed = false;
             }
             else {
                 logger.error(`${TAG}::addResponse:`, err);
-                throw err;
             }
+            throw err;
         }
-
-        return res;
     },
 
     removeResponse: async (guildId, trigger, response) => {

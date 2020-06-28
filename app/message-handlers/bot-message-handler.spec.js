@@ -87,7 +87,7 @@ describe('bot-message-handler', () => {
                 const message = `${testInput.command} ${testInput.trigger} | ${testInput.response}`;
                 mockTriggerService.expects('addResponse')
                     .withArgs(_guildId, testInput.trigger.toLowerCase(), testInput.response)
-                    .returns({isAllowed: true});
+                    .returns(123);
                 
                 // Act
                 const response = await BotMessageHandler.handleMessage(message, _guildId);
@@ -101,7 +101,7 @@ describe('bot-message-handler', () => {
         it('should fail for duplicates', async () => {
             // Arrange
             const message = 'add hello | world';
-            mockTriggerService.expects('addResponse').returns({isAllowed: false});
+            mockTriggerService.expects('addResponse').throws({constraint: 'UX_Trigger_Response_GuildId'});
 
             // Act
             const response = await BotMessageHandler.handleMessage(message, _guildId);

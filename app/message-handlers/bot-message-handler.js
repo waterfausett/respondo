@@ -52,11 +52,16 @@ async function getResponses(guildId) {
 }
 
 async function addResponse(guildId, args) {
-    const { isAllowed } = await triggerService.addResponse(guildId, args[0].toLowerCase(), args[1]);
-
-    return isAllowed
-        ? [{message: strings.got_it}]
-        : [{message: strings.trigger_already_exists}];
+    try {
+        await triggerService.addResponse(guildId, args[0].toLowerCase(), args[1]);
+        return [{message: strings.got_it}];
+    }
+    catch (err) {
+        if (err && err.constraint === 'UX_Trigger_Response_GuildId') {
+            return [{message: strings.trigger_already_exists}];
+        }
+        throw err;
+    }
 }
 
 async function removeTrigger(guildId, trigger) {
