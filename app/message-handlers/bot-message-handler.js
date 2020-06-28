@@ -100,6 +100,11 @@ function getHelp() {
                     name: 'remove',
                     value: strings.remove_help,
                     inline: false
+                },
+                {
+                    name: 'Notes:',
+                    value: strings.help_notes,
+                    inline: false
                 }
             ]
         }
