@@ -76,10 +76,18 @@ describe('bot-message-handler', () => {
     });
 
     describe('addResponse', () => {
-        ['add hello | world', 'AdD hello | world', 'add HeLlo | world'].forEach((message) => {
+        [
+            {command: 'add', trigger: 'hello', response: 'world'},
+            {command: 'add', trigger: 'hello', response: 'wOrLd'},
+            {command: 'AdD', trigger: 'hello', response: 'world'},
+            {command: 'add', trigger: 'HeLlo', response: 'world'},
+        ].forEach((testInput) => {
             it('should add response', async () => {
                 // Arrange
-                mockTriggerService.expects('addResponse').withArgs(_guildId, 'hello').returns({isAllowed: true});
+                const message = `${testInput.command} ${testInput.trigger} | ${testInput.response}`;
+                mockTriggerService.expects('addResponse')
+                    .withArgs(_guildId, testInput.trigger.toLowerCase(), testInput.response)
+                    .returns({isAllowed: true});
                 
                 // Act
                 const response = await BotMessageHandler.handleMessage(message, _guildId);
@@ -105,10 +113,16 @@ describe('bot-message-handler', () => {
     });
 
     describe('removeResponse', () => {
-        ['remove hello | world', 'ReMoVe hello | world', 'remove HeLlo | world'].forEach((message) => {
+        [
+            {command: 'remove', trigger: 'hello', response: 'world'},
+            {command: 'remove', trigger: 'hello', response: 'wOrLd'},
+            {command: 'ReMoVe', trigger: 'hello', response: 'world'},
+            {command: 'remove', trigger: 'HeLlo', response: 'world'},
+        ].forEach((testInput) => {
             it('should remove response', async () => {
                 // Arrange
-                mockTriggerService.expects('removeResponse').withArgs(_guildId, 'hello');
+                const message = `${testInput.command} ${testInput.trigger} | ${testInput.response}`;
+                mockTriggerService.expects('removeResponse').withArgs(_guildId, testInput.trigger.toLowerCase(), testInput.response);
                 mockTriggerService.expects('removeTrigger').never();
                 
                 // Act
@@ -123,10 +137,15 @@ describe('bot-message-handler', () => {
     });
 
     describe('removeTrigger', () => {
-        ['remove hello', 'ReMoVe hello', 'remove HeLlo'].forEach((message) => {
+        [
+            {command: 'remove', trigger: 'hello'},
+            {command: 'ReMoVe', trigger: 'hello'},
+            {command: 'remove', trigger: 'HeLlo'},
+        ].forEach((testInput) => {
             it('should remove trigger', async () => {
                 // Arrange
-                mockTriggerService.expects('removeTrigger').withArgs(_guildId, 'hello');
+                const message = `${testInput.command} ${testInput.trigger}`;
+                mockTriggerService.expects('removeTrigger').withArgs(_guildId, testInput.trigger.toLowerCase());
                 mockTriggerService.expects('removeResponse').never();
                 
                 // Act
