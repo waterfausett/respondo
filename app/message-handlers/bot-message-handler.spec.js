@@ -94,7 +94,7 @@ describe('bot-message-handler', () => {
 
                 // Assert
                 assert.ok(response);
-                expect(response).deep.includes({message: strings.got_it});
+                expect(response).deep.includes(strings.got_it);
             });
         });
 
@@ -108,7 +108,7 @@ describe('bot-message-handler', () => {
 
             // Assert
             assert.ok(response);
-            expect(response).deep.includes({message: strings.trigger_already_exists});
+            expect(response).deep.includes(strings.trigger_already_exists);
         });
     });
 
@@ -130,7 +130,7 @@ describe('bot-message-handler', () => {
 
                 // Assert
                 assert.ok(response);
-                expect(response).deep.includes({message: strings.got_it});
+                expect(response).deep.includes(strings.got_it);
 
             });
         });
@@ -153,7 +153,7 @@ describe('bot-message-handler', () => {
     
                 // Assert
                 assert.ok(response);
-                expect(response).deep.includes({message: strings.got_it});
+                expect(response).deep.includes(strings.got_it);
             });
         });
     });

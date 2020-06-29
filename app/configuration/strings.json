@@ -3,11 +3,12 @@
     "coming_soon": "eh...maybe there'll be a meaningful response to this request one day ¯\\_(ツ)_/¯",
     "got_it": "Got it :sunglasses:",
 
-    "responses_list": "Here is a list of triggers/responses I know about (if there are multiple, I'll just pick one :stuck_out_tongue_winking_eye:):",
+    "responses_list": "Here is a list of triggers/responses I know about",
+    "responses_multiple_disclaimer": "(if there are multiple, I'll just pick one :stuck_out_tongue_winking_eye:)",
     "responses_none": ":thinking_face: it looks like there aren't any -- try asking for \"help\" if you're having trouble",
     "responses_help": "I'll show you a list of trigger words and the responses that go with them",
 
-    "triggers_list": "Here is a list of triggers I know about:",
+    "triggers_list": "Here is a list of triggers I know about",
     "triggers_none": ":thinking_face: it looks like there aren't any -- try asking for \"help\" if you're having trouble",
     "triggers_help": "I'll show you a list of trigger words I know about",
     "trigger_already_exists": ":zany_face: I already know about that one silly",

@@ -1,3 +1,4 @@
+const Discord = require('discord.js');
 const triggerService = require('../services/trigger.service');
 
 function escapeRegExp(str) {
@@ -17,9 +18,9 @@ module.exports = {
             })
             .forEach(key => {
                 const randomResponse = guildResponses[key][Math.floor(Math.random() * guildResponses[key].length)];
-                responseMessages.push({message: randomResponse});
+                responseMessages.push(randomResponse);
             });
 
-        return responseMessages;
+        return responseMessages.map(x => x.toLowerCase().startsWith('http') ? new Discord.MessageAttachment(x) : x);
     }
 };
