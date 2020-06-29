@@ -81,9 +81,9 @@ async function removeResponse(guildId, args) {
     return [{message: strings.got_it}];
 }
 
-function getHelp() {
+function getHelp(userId) {
     return [{
-        message: "Hi there :smiley:\nHere's some info about the commands I understand:",
+        message: `Hi there <@${userId}> :smiley:\nHere's some info about the commands I understand:`,
         embed: {
             fields: [
                 {
@@ -117,7 +117,7 @@ function getHelp() {
 }
 
 module.exports = {
-    handleMessage: (message, guildId) => {
+    handleMessage: (message, guildId, userId) => {
         const args = message.split(' ');
         const cmd = args.shift();
     
@@ -126,7 +126,7 @@ module.exports = {
         switch (cmd.trim().toUpperCase()) {
             case 'HELP':
             case '?':
-                return getHelp();;
+                return getHelp(userId);
             case 'TRIGGERS':
                 return getTriggers(guildId);
             case 'RESPONSES':

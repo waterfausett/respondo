@@ -18,8 +18,8 @@ bot.on('ready', (evt) => {
     logger.info('Logged in as: '+ bot.username + ' - (' + bot.id + ')');
 });
 
-bot.on('message', async (user, userID, channelId, message, evt) => {
-    if (userID === bot.id) return;
+bot.on('message', async (user, userId, channelId, message, evt) => {
+    if (userId === bot.id) return;
 
     try {
         const guildId = evt.d.guild_id;
@@ -32,7 +32,7 @@ bot.on('message', async (user, userID, channelId, message, evt) => {
             .join(' '); // put the sentence back together
     
         const responseMessages = botMention
-            ? await BotMessageHandler.handleMessage(messageArgs, guildId)
+            ? await BotMessageHandler.handleMessage(messageArgs, guildId, userId)
             : await ResponseMessageHandler.handleMessage(messageArgs, guildId);
     
         sendMessages(channelId, responseMessages);
