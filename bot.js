@@ -62,11 +62,8 @@ function sendMessages(message, responseMessages, interval = config.simulateTypin
                 const msg = responseMessages.shift();
                 // TODO: prolly should try and trim the response here - i think Discord only allows up-to 2000 chars
                 message.channel.send(msg)
-                    .then(_ => message.channel.stopTyping())
-                    .catch(err => {
-                        logger.error(JSON.stringify(error));
-                        message.channel.stopTyping();
-                    });
+                    .catch(err => logger.error(JSON.stringify(err)))
+                    .finally(_ => message.channel.stopTyping());
             
                 _sendMessages();
             }
