@@ -56,7 +56,7 @@ bot.on('error', function(errMsg, code) {
 function sendMessages(message, responseMessages, interval = config.simulateTyping ? 1000 : 0) {
     responseMessages = (responseMessages || []).filter(x => x).slice(0, config.maximumResponsesPerMessage);
 
-    if (config.simulateTyping && responseMessages.length > 0) message.channel.startTyping();
+    if ((process.env.simulate_typing || config.simulateTyping) && responseMessages.length > 0) message.channel.startTyping();
 
     function _sendMessages() {
         setTimeout(() => {
