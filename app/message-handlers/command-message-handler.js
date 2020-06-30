@@ -22,7 +22,7 @@ module.exports = {
                 }
                 
                 const query = querystring.stringify({ term: args.join(' ') });
-                const { list } = await fetch(`https://api.urbandictionary.com/v0/define123?${query}`).then(response => response.json());
+                const { list } = await fetch(`https://api.urbandictionary.com/v0/define?${query}`).then(response => response.json());
     
                 if (!list.length) {
                     return [`No results found for **${args.join(' ')}**.`];
