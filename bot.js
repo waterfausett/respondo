@@ -5,7 +5,10 @@ const config = require('./app/configuration/bot.config.json');
 const auth = optionalRequire('./app/configuration/auth.config.json') || {};
 const strings = require('./app/configuration/strings.json');
 const BotMessageHandler = require('./app/message-handlers/bot-message-handler');
+const CommandMessageHandler = require('./app/message-handlers/command-message-handler');
 const ResponseMessageHandler = require('./app/message-handlers/response-message-handler');
+
+global.fetch = require('node-fetch');
 
 // Initialize Discord Bot
 const bot = new Discord.Client();
@@ -17,8 +20,6 @@ bot.once('ready', () => {
 
 bot.on('message', async (message) => {
     if (message.author.bot) return;
-
-    //if (message.author.id != '618612104102019074') return;
 
     try {
         const guildId = message.guild.id;
@@ -32,11 +33,12 @@ bot.on('message', async (message) => {
     
         const responseMessages = botMention
             ? await BotMessageHandler.handleMessage(messageArgs, guildId)
-            : await ResponseMessageHandler.handleMessage(messageArgs, guildId);
+            : await CommandMessageHandler.handleMessage(messageArgs)
+                .then(results => results || ResponseMessageHandler.handleMessage(messageArgs, guildId));
 
         sendMessages(message, responseMessages);
     } catch (error) {
-        logger.error('Failed to process a message: ', {message, error});
+        logger.error('Failed to process a message: ', [message, error]);
         sendMessages(message, [strings.error]);
     }
 });
@@ -52,7 +54,7 @@ bot.on('error', function(errMsg, code) {
 });
 
 function sendMessages(message, responseMessages, interval = config.simulateTyping ? 1000 : 0) {
-    responseMessages = (responseMessages || []).slice(0, config.maximumResponsesPerMessage);
+    responseMessages = (responseMessages || []).filter(x => x).slice(0, config.maximumResponsesPerMessage);
 
     if (config.simulateTyping && responseMessages.length > 0) message.channel.startTyping();
 
