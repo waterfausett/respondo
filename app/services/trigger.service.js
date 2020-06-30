@@ -55,10 +55,31 @@ module.exports = {
         }
     },
 
-    getResponses: async (guildId, triggers) => {
+    getResponses: async (guildId) => {
         try {
             const result = await executeQuery({
                 name: 'triggers-getResponses',
+                text: `SELECT id, trigger, response FROM "TriggerResponses" WHERE "guildId" = $1`,
+                values: [guildId]
+            });
+            const results = (result) 
+                ? result.rows.reduce((obj, v) => {
+                    obj[v.trigger] = (obj[v.trigger] || []);
+                    obj[v.trigger].push(v.response);
+                    return obj;
+                }, {})
+                : {};
+            return results;
+        } catch (err) {
+            logger.error(`${TAG}::getResponses:`, err);
+            throw err;
+        }
+    },
+
+    searchResponses: async (guildId, triggers) => {
+        try {
+            const result = await executeQuery({
+                name: 'triggers-searchResponses',
                 text: `SELECT id, trigger, response FROM "TriggerResponses" WHERE "guildId" = $1 AND trigger = ANY($2) ORDER BY trigger`,
                 values: [guildId, triggers]
             });
@@ -71,7 +92,7 @@ module.exports = {
                 : {};
             return results;
         } catch (err) {
-            logger.error(`${TAG}::getResponses:`, err);
+            logger.error(`${TAG}::searchResponses:`, err);
             throw err;
         }
     },

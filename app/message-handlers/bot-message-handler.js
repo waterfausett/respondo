@@ -21,10 +21,10 @@ async function getTriggers(guildId) {
     return [embed];
 }
 
-async function getResponses(guildId, args) {
+async function searchResponses(guildId, args) {
     if (args.length === 0) return [strings.responses_search_no_term];
 
-    const guildResponses = await triggerService.getResponses(guildId, args);
+    const guildResponses = await triggerService.searchResponses(guildId, args);
     const keys = Object.keys(guildResponses);
     const embed = new Discord.MessageEmbed()
         .setTitle(strings.responses_search)
@@ -123,7 +123,7 @@ module.exports = {
             case 'TRIGGERS':
                 return getTriggers(guildId);
             case 'RESPONSES':
-                return getResponses(guildId, cmdArgs);
+                return searchResponses(guildId, cmdArgs);
             case 'ADD':
                 return addResponse(guildId, cmdArgs);
             case 'REMOVE':

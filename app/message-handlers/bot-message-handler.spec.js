@@ -60,11 +60,11 @@ describe('bot-message-handler', () => {
         });
     });
 
-    describe('getResponses', () => {
+    describe('searchResponses', () => {
         it('should return responses', async () => {
             // Arrange
             const message = 'responses trigger1';
-            mockTriggerService.expects('getResponses').returns(guildConfig);
+            mockTriggerService.expects('searchResponses').returns(guildConfig);
             
             // Act
             const response = await BotMessageHandler.handleMessage(message, _guildId);
