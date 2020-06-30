@@ -18,6 +18,8 @@ bot.once('ready', () => {
 bot.on('message', async (message) => {
     if (message.author.bot) return;
 
+    //if (message.author.id == '618612104102019074') return;
+
     try {
         const guildId = message.guild.id;
         const botMentionPattern = new RegExp(`<@.?${bot.user.id}>`)
@@ -58,8 +60,13 @@ function sendMessages(message, responseMessages, interval = config.simulateTypin
         setTimeout(() => {
             if (responseMessages[0]) {
                 const msg = responseMessages.shift();
+                // TODO: prolly should try and trim the response here - i think Discord only allows up-to 2000 chars
                 message.channel.send(msg)
-                    .then(_ => message.channel.stopTyping());
+                    .then(_ => message.channel.stopTyping())
+                    .catch(err => {
+                        logger.error(JSON.stringify(error));
+                        message.channel.stopTyping();
+                    });
             
                 _sendMessages();
             }
