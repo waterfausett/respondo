@@ -21,14 +21,16 @@ async function getTriggers(guildId) {
     return [embed];
 }
 
-async function getResponses(guildId) {
-    const guildResponses = await triggerService.getResponses(guildId);
+async function getResponses(guildId, args) {
+    if (args.length === 0) return [strings.responses_search_no_term];
+
+    const guildResponses = await triggerService.getResponses(guildId, args);
     const keys = Object.keys(guildResponses);
     const embed = new Discord.MessageEmbed()
-        .setTitle(strings.responses_list)
+        .setTitle(strings.responses_search)
         .setDescription(strings.responses_multiple_disclaimer);
 
-    if (keys.length === 0) return [trings.triggers_none];
+    if (keys.length === 0) return [strings.triggers_none];
 
     keys.forEach(key => {
         let value = '';
@@ -112,7 +114,7 @@ module.exports = {
         const args = message.split(' ');
         const cmd = args.shift();
     
-        const cmdArgs = args.join(' ').split('|').map(x => x.trim());
+        const cmdArgs = args.join(' ').split('|').map(x => x.trim()).filter(x => x);
 
         switch (cmd.trim().toUpperCase()) {
             case 'HELP':
@@ -121,7 +123,7 @@ module.exports = {
             case 'TRIGGERS':
                 return getTriggers(guildId);
             case 'RESPONSES':
-                return getResponses(guildId);
+                return getResponses(guildId, cmdArgs);
             case 'ADD':
                 return addResponse(guildId, cmdArgs);
             case 'REMOVE':

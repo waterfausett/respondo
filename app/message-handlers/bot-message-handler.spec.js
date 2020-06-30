@@ -56,14 +56,14 @@ describe('bot-message-handler', () => {
 
             // Assert
             assert.ok(response);
-            expect(response).not.deep.includes({message: strings.triggers_none});
+            expect(response).not.deep.includes(strings.triggers_none);
         });
     });
 
     describe('getResponses', () => {
         it('should return responses', async () => {
             // Arrange
-            const message = 'responses';
+            const message = 'responses trigger1';
             mockTriggerService.expects('getResponses').returns(guildConfig);
             
             // Act
@@ -71,7 +71,8 @@ describe('bot-message-handler', () => {
 
             // Assert
             assert.ok(response);
-            expect(response).not.deep.includes({message: strings.triggers_none});
+            expect(response).not.deep.includes(strings.triggers_none);
+            expect(response).not.deep.includes(strings.responses_search_no_term);
         });
     });
 

@@ -18,7 +18,7 @@ bot.once('ready', () => {
 bot.on('message', async (message) => {
     if (message.author.bot) return;
 
-    //if (message.author.id == '618612104102019074') return;
+    //if (message.author.id != '618612104102019074') return;
 
     try {
         const guildId = message.guild.id;

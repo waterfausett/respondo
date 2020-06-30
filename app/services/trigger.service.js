@@ -55,12 +55,12 @@ module.exports = {
         }
     },
 
-    getResponses: async (guildId) => {
+    getResponses: async (guildId, triggers) => {
         try {
             const result = await executeQuery({
                 name: 'triggers-getResponses',
-                text: `SELECT id, trigger, response FROM "TriggerResponses" WHERE "guildId" = $1 ORDER BY trigger`,
-                values: [guildId]
+                text: `SELECT id, trigger, response FROM "TriggerResponses" WHERE "guildId" = $1 AND trigger = ANY($2) ORDER BY trigger`,
+                values: [guildId, triggers]
             });
             const results = (result) 
                 ? result.rows.reduce((obj, v) => {
