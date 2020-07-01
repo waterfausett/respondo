@@ -1,10 +1,16 @@
-const logger = require('winston');
+const winston = require('winston');
+const { format, transports } = winston
 
-// Configure logger settings
-logger.remove(logger.transports.Console);
-logger.add(new logger.transports.Console, {
-    colorize: true
+const logger = winston.createLogger({
+    level:  (process.env.NODE_ENV === 'production') ? 'info' : 'debug',
+    transports: [
+        new transports.Console({
+            format: format.combine(
+                format.colorize(),
+                format.simple(),
+            )
+        })
+    ]
 });
-logger.level = 'debug';
 
 module.exports = logger;
