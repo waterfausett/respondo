@@ -38,7 +38,8 @@ bot.on('message', async (message) => {
 
         sendMessages(message, responseMessages);
     } catch (error) {
-        logger.error('Failed to process a message: ', [message, error]);
+        logger.error(`Failed to process a message: ${message.content}`);
+        logger.error(error);
         sendMessages(message, [strings.error]);
     }
 });
@@ -87,3 +88,5 @@ function sendMessages(message, responseMessages, interval = (process.env.simulat
 }
 
 bot.login(process.env.auth_token || auth.token);
+
+module.exports = bot;

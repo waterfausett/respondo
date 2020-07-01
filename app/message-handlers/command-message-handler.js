@@ -44,7 +44,7 @@ module.exports = {
             }
         }
         catch (error) {
-            logger.error('Failed talking to UrbanDictionary', [message, error]);
+            logger.error('Failed talking to UrbanDictionary: ', error);
             return ['Failed trying to talk to Urban Dictionary :cry:'];
         }
     }
