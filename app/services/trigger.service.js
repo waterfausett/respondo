@@ -30,7 +30,7 @@ module.exports = {
             });
             return result ? result.rows : [];
         } catch (err) {
-            logger.error(`${TAG}::getRows:`, err);
+            logger.error(`[${TAG}::getRows] `, err);
             throw err;
         }
     },
@@ -50,7 +50,7 @@ module.exports = {
                 : {};
             return results;
         } catch (err) {
-            logger.error(`${TAG}::getTriggers:`, err);
+            logger.error(`[${TAG}::getTriggers] `, err);
             throw err;
         }
     },
@@ -71,7 +71,7 @@ module.exports = {
                 : {};
             return results;
         } catch (err) {
-            logger.error(`${TAG}::getResponses:`, err);
+            logger.error(`[${TAG}::getResponses] `, err);
             throw err;
         }
     },
@@ -92,7 +92,7 @@ module.exports = {
                 : {};
             return results;
         } catch (err) {
-            logger.error(`${TAG}::searchResponses:`, err);
+            logger.error(`[${TAG}::searchResponses] `, err);
             throw err;
         }
     },
@@ -107,10 +107,10 @@ module.exports = {
             return insertResult.rows[0].id;
         } catch (err) {
             if (err && err.constraint === 'UX_Trigger_Response_GuildId') {
-                logger.warn(`${TAG}::addResponse:`, err);
+                logger.warn(`[${TAG}::addResponse] `, err);
             }
             else {
-                logger.error(`${TAG}::addResponse:`, err);
+                logger.error(`[${TAG}::addResponse] `, err);
             }
             throw err;
         }
@@ -124,7 +124,7 @@ module.exports = {
                 values: [guildId, sqlClean(trigger), sqlClean(response)]
             });
         } catch (err) {
-            logger.error(`${TAG}::removeResponse:`, err);
+            logger.error(`[${TAG}::removeResponse] `, err);
             throw err;
         }
     },
@@ -137,7 +137,7 @@ module.exports = {
                 values: [guildId, sqlClean(trigger)]
             });
         } catch (err) {
-            logger.error(`${TAG}::removeTrigger:`, err);
+            logger.error(`[${TAG}::removeTrigger] `, err);
             throw err;
         }
     }
