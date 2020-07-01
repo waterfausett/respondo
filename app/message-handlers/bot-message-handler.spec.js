@@ -56,22 +56,23 @@ describe('bot-message-handler', () => {
 
             // Assert
             assert.ok(response);
-            expect(response).not.deep.includes({message: strings.triggers_none});
+            expect(response).not.deep.includes(strings.triggers_none);
         });
     });
 
-    describe('getResponses', () => {
+    describe('searchResponses', () => {
         it('should return responses', async () => {
             // Arrange
-            const message = 'responses';
-            mockTriggerService.expects('getResponses').returns(guildConfig);
+            const message = 'responses trigger1';
+            mockTriggerService.expects('searchResponses').returns(guildConfig);
             
             // Act
             const response = await BotMessageHandler.handleMessage(message, _guildId);
 
             // Assert
             assert.ok(response);
-            expect(response).not.deep.includes({message: strings.triggers_none});
+            expect(response).not.deep.includes(strings.triggers_none);
+            expect(response).not.deep.includes(strings.responses_search_no_term);
         });
     });
 
@@ -94,7 +95,7 @@ describe('bot-message-handler', () => {
 
                 // Assert
                 assert.ok(response);
-                expect(response).deep.includes({message: strings.got_it});
+                expect(response).deep.includes(strings.got_it);
             });
         });
 
@@ -108,7 +109,7 @@ describe('bot-message-handler', () => {
 
             // Assert
             assert.ok(response);
-            expect(response).deep.includes({message: strings.trigger_already_exists});
+            expect(response).deep.includes(strings.trigger_already_exists);
         });
     });
 
@@ -130,7 +131,7 @@ describe('bot-message-handler', () => {
 
                 // Assert
                 assert.ok(response);
-                expect(response).deep.includes({message: strings.got_it});
+                expect(response).deep.includes(strings.got_it);
 
             });
         });
@@ -153,7 +154,7 @@ describe('bot-message-handler', () => {
     
                 // Assert
                 assert.ok(response);
-                expect(response).deep.includes({message: strings.got_it});
+                expect(response).deep.includes(strings.got_it);
             });
         });
     });

@@ -3,18 +3,23 @@
     "coming_soon": "eh...maybe there'll be a meaningful response to this request one day ¯\\_(ツ)_/¯",
     "got_it": "Got it :sunglasses:",
 
-    "responses_list": "Here is a list of triggers/responses I know about (if there are multiple, I'll just pick one :stuck_out_tongue_winking_eye:):",
+    "responses_list": "Here is a list of triggers/responses I know about",
+    "responses_search": "Here's some more info about the triggers you asked about",
+    "responses_search_no_term": "You need to supply a search term with the `responses` command! :person_facepalming:",
+    "responses_multiple_disclaimer": "if there are multiple available, I'll just pick one :stuck_out_tongue_winking_eye:",
     "responses_none": ":thinking_face: it looks like there aren't any -- try asking for \"help\" if you're having trouble",
-    "responses_help": "I'll show you a list of trigger words and the responses that go with them",
+    "responses_help": "I'll show you a list of responses that go with the triggers you search for.\n  - just @ me, then \"responses [trigger]\"\n  - you can search for multiple triggers like this:\n \"responses [trigger1] | [trigger2]...\"",
 
-    "triggers_list": "Here is a list of triggers I know about:",
+    "triggers_list": "Here is a list of triggers I know about",
     "triggers_none": ":thinking_face: it looks like there aren't any -- try asking for \"help\" if you're having trouble",
     "triggers_help": "I'll show you a list of trigger words I know about",
     "trigger_already_exists": ":zany_face: I already know about that one silly",
 
-    "add_help": "This is how you can add to the triggers/responses I know about\n  - just @ me, then say something like, \"add [trigger] | [response]\"\n  - triggers and responses can be words or phrases\n  - if there are multiple responses configured for a trigger, I'll just pick one to send back :wink:",
+    "urbandictionary_search_no_term": "You need to supply a search term with the `!urban` command! :person_facepalming:",
+
+    "add_help": "Add to the triggers/responses I know about\n  - just @ me, then say something like, \"add [trigger] | [response]\"\n  - if there are multiple responses available, I'll just pick one :wink:",
     
-    "remove_help": "This is how you can remove a specific response for a trigger, or get rid of the trigger altogether\n  - just @ me, then say something like, \"remove [trigger] | [response]\"\n    - to remove a trigger entirely, just say \"remove [trigger]\"",
+    "remove_help": "Remove a specific response for a trigger, or get rid of the trigger altogether\n  - just @ me, then say something like, \"remove [trigger] | [response]\"\n    - to remove a trigger entirely, just say \"remove [trigger]\"",
 
     "help_notes": "`triggers` are case insensitive (meaning \"cat\" will match: cat, CAT, cAt, etc.), \n but I'll give your `responses` back just like you enter them.",
 

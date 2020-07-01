@@ -1,3 +1,4 @@
+const Discord = require('discord.js');
 const strings = require('../configuration/strings.json');
 const logger = require('../services/logger.service');
 const triggerService = require('../services/trigger.service');
@@ -6,59 +7,52 @@ async function getTriggers(guildId) {
     const guildTriggers = await triggerService.getTriggers(guildId);
     const keys = Object.keys(guildTriggers);
 
-    if (keys.length === 0) return [{message: strings.triggers_none}];
+    if (keys.length === 0) return [strings.triggers_none];
 
     var triggersResponse = '';
     keys.forEach(key => {
         triggersResponse += `${key} \`${guildTriggers[key]}\`\n`;
     });
 
-    return [{
-        message: strings.triggers_list,
-        embed: {
-            description: triggersResponse
-        }
-    }];
+    const embed = new Discord.MessageEmbed()
+        .setTitle(strings.triggers_list)
+        .setDescription(triggersResponse);
+
+    return [embed];
 }
 
-async function getResponses(guildId) {
-    const guildResponses = await triggerService.getResponses(guildId);
-    const keys = Object.keys(guildResponses);
-    const fields = [];
+async function searchResponses(guildId, args) {
+    if (args.length === 0) return [strings.responses_search_no_term];
 
-    if (keys.length === 0) return [{message: strings.triggers_none}];
+    const guildResponses = await triggerService.searchResponses(guildId, args);
+    const keys = Object.keys(guildResponses);
+    const embed = new Discord.MessageEmbed()
+        .setTitle(strings.responses_search)
+        .setDescription(strings.responses_multiple_disclaimer);
+
+    if (keys.length === 0) return [strings.triggers_none];
 
     keys.forEach(key => {
-        var field = {
-            name: key,
-            value: '',
-            inline: false
-        };
+        let value = '';
         guildResponses[key].forEach(response => {
-            const isLink = response.toLowerCase().startsWith('http');
-            field.value += isLink
+            value += response.toLowerCase().startsWith('http')
                 ? `- <${response}>\n`
                 : `- ${response}\n`;
         });
-        fields.push(field);
+        embed.addField(key, value);
     });
 
-    return [{
-        message: strings.responses_list,
-        embed: {
-            fields: fields
-        }
-    }];
+    return [embed];
 }
 
 async function addResponse(guildId, args) {
     try {
         await triggerService.addResponse(guildId, args[0].toLowerCase(), args[1]);
-        return [{message: strings.got_it}];
+        return [strings.got_it];
     }
     catch (err) {
         if (err && err.constraint === 'UX_Trigger_Response_GuildId') {
-            return [{message: strings.trigger_already_exists}];
+            return [strings.trigger_already_exists];
         }
         throw err;
     }
@@ -67,7 +61,7 @@ async function addResponse(guildId, args) {
 async function removeTrigger(guildId, trigger) {
     await triggerService.removeTrigger(guildId, trigger.toLowerCase());
 
-    return [{message: strings.got_it}];
+    return [strings.got_it];
 }
 
 async function removeResponse(guildId, args) {
@@ -78,66 +72,65 @@ async function removeResponse(guildId, args) {
 
     await triggerService.removeResponse(guildId, args[0].toLowerCase(), args[1]);
 
-    return [{message: strings.got_it}];
+    return [strings.got_it];
 }
 
-function getHelp(userId) {
-    return [{
-        message: `Hi there <@${userId}> :smiley:\nHere's some info about the commands I understand:`,
-        embed: {
-            fields: [
-                {
-                    name: 'triggers',
-                    value: strings.triggers_help,
-                    inline: false
-                },
-                {
-                    name: 'responses',
-                    value: strings.responses_help,
-                    inline: false
-                },
-                {
-                    name: 'add',
-                    value: strings.add_help,
-                    inline: false
-                },
-                {
-                    name: 'remove',
-                    value: strings.remove_help,
-                    inline: false
-                },
-                {
-                    name: 'Notes:',
-                    value: strings.help_notes,
-                    inline: false
-                }
-            ]
-        }
-    }];
+function getHelp() {
+    const embed = new Discord.MessageEmbed()
+        .setTitle(`Here's some info about the commands I understand:`)
+        .addFields([
+            {
+                name: 'triggers',
+                value: strings.triggers_help,
+                inline: false
+            },
+            {
+                name: 'responses',
+                value: strings.responses_help,
+                inline: false
+            },
+            {
+                name: 'add',
+                value: strings.add_help,
+                inline: false
+            },
+            {
+                name: 'remove',
+                value: strings.remove_help,
+                inline: false
+            },
+            {
+                name: 'Notes:',
+                value: strings.help_notes,
+                inline: false
+            }
+        ]);
+
+    return [embed];
 }
 
 module.exports = {
-    handleMessage: (message, guildId, userId) => {
+    handleMessage: (message, guildId) => {
         const args = message.split(' ');
         const cmd = args.shift();
     
-        const cmdArgs = args.join(' ').split('|').map(x => x.trim());
+        const cmdArgs = args.join(' ').split('|').map(x => x.trim()).filter(x => x);
 
         switch (cmd.trim().toUpperCase()) {
             case 'HELP':
             case '?':
-                return getHelp(userId);
+                return getHelp();
             case 'TRIGGERS':
                 return getTriggers(guildId);
             case 'RESPONSES':
-                return getResponses(guildId);
+                return searchResponses(guildId, cmdArgs);
             case 'ADD':
                 return addResponse(guildId, cmdArgs);
             case 'REMOVE':
                 return removeResponse(guildId, cmdArgs);
             default: 
                 logger.warn({t: 'INVALID_REQUEST', guildId, message});
-                return [{message: strings.invalid_request}];
+                return [strings.invalid_request];
         }
     }
 };

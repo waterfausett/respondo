@@ -1,4 +1,5 @@
 {
     "simulateTyping": true,
-    "maximumResponsesPerMessage": 1
+    "maximumResponsesPerMessage": 1,
+    "commandPrefix": "!"
 }
