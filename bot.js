@@ -53,21 +53,31 @@ bot.on('error', function(errMsg, code) {
     logger.warn(errMsg, code);
 });
 
-function sendMessages(message, responseMessages, interval = config.simulateTyping ? 1000 : 0) {
-    responseMessages = (responseMessages || []).filter(x => x).slice(0, config.maximumResponsesPerMessage);
-
+function sendMessages(message, responseMessages, interval = (process.env.simulate_typing || config.simulateTyping) ? 50 : 10) {
+    const maximumResponses = process.env.maximum_responses_per_message || config.maximumResponsesPerMessage;
+    responseMessages = (responseMessages || []).filter(x => x).slice(0, maximumResponses);
+    
     if ((process.env.simulate_typing || config.simulateTyping) && responseMessages.length > 0) message.channel.startTyping();
+
+    const _send = (msg) => {
+        message.channel.send(msg)
+            .catch(err => {
+                logger.error(JSON.stringify(err));
+                message.channel.send(strings.error);
+            })
+            .finally(_ => message.channel.stopTyping());
+    };
 
     function _sendMessages() {
         setTimeout(() => {
             if (responseMessages[0]) {
                 const msg = responseMessages.shift();
-                message.channel.send(msg)
-                    .catch(err => {
-                        logger.error(JSON.stringify(err));
-                        message.channel.send(strings.error);
-                    })
-                    .finally(_ => message.channel.stopTyping());
+                if (Array.isArray(msg)) {
+                    msg.forEach(x => _send(x));
+                }
+                else {
+                    _send(msg);
+                }
             
                 _sendMessages();
             }

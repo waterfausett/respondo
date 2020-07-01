@@ -28,7 +28,13 @@ describe('response-message-handler', () => {
             'trigger_phrase_response1'
         ],
         'trigger5': [
-            'https://media3.giphy.com/media/llmZp6fCVb4ju/giphy.gif'
+            'https://meme.factory.com/giphy.gif'
+        ],
+        'trigger6': [
+            'hello there https://meme.factory.com/giphy.gif'
+        ],
+        'trigger7': [
+            'hello https://meme.factory.com/giphy.gif there'
         ]
     };
 
@@ -75,7 +81,9 @@ describe('response-message-handler', () => {
         { message: 'trigger that is a phrase', expectedResponses: ['trigger_phrase_response1'] },
         { message: 'trigger1 trigger2', expectedResponses: ['trigger1_response1', 'trigger2_response1'] },
         { message: 'trigger4', expectedResponses: ['trigger4_ReSpOnSe1'] },
-        { message: 'trigger5', expectedResponses: [new Discord.MessageAttachment('https://media3.giphy.com/media/llmZp6fCVb4ju/giphy.gif')] },
+        { message: 'trigger5', expectedResponses: [new Discord.MessageAttachment('https://meme.factory.com/giphy.gif')] },
+        { message: 'trigger6', expectedResponses: [['hello there', new Discord.MessageAttachment('https://meme.factory.com/giphy.gif')]] },
+        { message: 'trigger7', expectedResponses: [['hello there', new Discord.MessageAttachment('https://meme.factory.com/giphy.gif')]] },
     ]
     .forEach((testInput) => {
         it(`should return an appropriate response: ${testInput.message}`, async () => {
