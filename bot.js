@@ -53,7 +53,7 @@ bot.on('error', function(errMsg, code) {
     logger.warn(errMsg, code);
 });
 
-function sendMessages(message, responseMessages, interval = (process.env.simulate_typing || config.simulateTyping) ? 50 : 10) {
+function sendMessages(message, responseMessages, interval = (process.env.simulate_typing || config.simulateTyping) ? 1000 : 10) {
     const maximumResponses = process.env.maximum_responses_per_message || config.maximumResponsesPerMessage;
     responseMessages = (responseMessages || []).filter(x => x).slice(0, maximumResponses);
     
