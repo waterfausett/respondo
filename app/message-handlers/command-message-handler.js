@@ -38,7 +38,7 @@ module.exports = {
                     .addFields(
                         { name: 'Definition', value: trim(answer.definition, 1024) },
                         { name: 'Example', value: trim(answer.example, 1024) },
-                        { name: 'Rating', value: `${answer.thumbs_up} 👍\n${answer.thumbs_down} 👎` }
+                        { name: 'Rating', value: `:star_struck: \`${answer.thumbs_up}\` :cry: \`${answer.thumbs_down}\`` }
                     );
     
                 return [embed];
