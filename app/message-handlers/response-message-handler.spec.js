@@ -50,8 +50,8 @@ describe('response-message-handler', () => {
         assert.ok(ResponseMessageHandler);
     });
 
-    ['trigger1', ' trigger1 ', 'trigger1?', 'trigger1 test', 'test trigger1', 'another trigger1 test', 'trigger4',
-    'TRIGGER1', 'TrIGgEr1', 'some-trigger1', 'trigger1-thing', 'this is a trigger that is a phrase, bet you did not see that comeing']
+    ['trigger1', ' trigger1 ', 'trigger1?', 'trigger1 test', 'trigger1! test', 'test trigger1', 'another trigger1 test', 'trigger4',
+    'TRIGGER1', 'TrIGgEr1', 'some-trigger1', 'trigger1-thing', '!trigger1', '!trigger1!', 'this is a trigger that is a phrase, bet you did not see that coming']
         .forEach((message) => {
             it(`should recognize triggers: '${message}'`, async () => {
                 // Act
