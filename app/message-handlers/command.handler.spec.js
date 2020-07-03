@@ -5,7 +5,7 @@ const { expect, assert: chaiAssert } = require('chai');
 const config = require('../configuration/bot.config.json');
 const strings = require('../configuration/strings.json');
 const Discord = require('discord.js');
-const CommandMessageHandler = require('./command-message-handler');
+const CommandHandler = require('./command.handler');
 const logger = require('../services/logger.service');
 
 const sandbox = sinon.createSandbox();
@@ -41,7 +41,7 @@ describe('command-message-handler', () => {
     });
 
     it('should be created', () => {
-        assert.ok(CommandMessageHandler);
+        assert.ok(CommandHandler);
     });
 
     it('should do nothing if no command is present', async () => {
@@ -49,7 +49,7 @@ describe('command-message-handler', () => {
         const message = 'responses arg1';
         
         // Act
-        const response = await CommandMessageHandler.handleMessage(message);
+        const response = await CommandHandler.handleMessage(message);
 
         // Assert
         assert.ifError(response);
@@ -61,7 +61,7 @@ describe('command-message-handler', () => {
             const message = `${config.commandPrefix}urban`;
             
             // Act
-            const response = await CommandMessageHandler.handleMessage(message);
+            const response = await CommandHandler.handleMessage(message);
 
             // Assert
             assert.ok(response);
@@ -74,7 +74,7 @@ describe('command-message-handler', () => {
             global.fetch = sinon.stub().returns(Promise.resolve({json: () => Promise.resolve(mockUdResponse)}));
             
             // Act
-            const response = await CommandMessageHandler.handleMessage(message);
+            const response = await CommandHandler.handleMessage(message);
 
             // Assert
             assert.ok(response);
@@ -87,7 +87,7 @@ describe('command-message-handler', () => {
             global.fetch = sinon.stub().returns(Promise.resolve({json: () => Promise.resolve({list: []})}));
             
             // Act
-            const response = await CommandMessageHandler.handleMessage(message);
+            const response = await CommandHandler.handleMessage(message);
 
             // Assert
             assert.ok(response);
@@ -100,7 +100,7 @@ describe('command-message-handler', () => {
             global.fetch = sinon.stub().throws();
             
             // Act
-            const response = await CommandMessageHandler.handleMessage(message);
+            const response = await CommandHandler.handleMessage(message);
 
             // Assert
             assert.ok(response);
