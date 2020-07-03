@@ -2,7 +2,7 @@ const sinon = require('sinon');
 const assert = require('assert');
 const { expect } = require('chai');
 
-const ResponseMessageHandler = require('./response-message-handler');
+const ResponseHandler = require('./response.handler');
 const triggerService = require('../services/trigger.service');
 const Discord = require('discord.js');
 
@@ -47,7 +47,7 @@ describe('response-message-handler', () => {
     });
 
     it('should be created', () => {
-        assert.ok(ResponseMessageHandler);
+        assert.ok(ResponseHandler);
     });
 
     ['trigger1', ' trigger1 ', 'trigger1?', 'trigger1 test', 'trigger1! test', 'test trigger1', 'another trigger1 test', 'multicase_trigger',
@@ -55,7 +55,7 @@ describe('response-message-handler', () => {
         .forEach((message) => {
             it(`should recognize triggers: '${message}'`, async () => {
                 // Act
-                const messages = await ResponseMessageHandler.handleMessage(message, _guildId);
+                const messages = await ResponseHandler.handleMessage(message, _guildId);
 
                 // Assert
                 assert.ok(messages);
@@ -67,7 +67,7 @@ describe('response-message-handler', () => {
         .forEach((message) => {
             it(`should not have false positives: '${message}'`, async () => {
                 // Act
-                const messages = await ResponseMessageHandler.handleMessage(message, _guildId);
+                const messages = await ResponseHandler.handleMessage(message, _guildId);
 
                 // Assert
                 assert.ok(messages);
@@ -88,7 +88,7 @@ describe('response-message-handler', () => {
     .forEach((testInput) => {
         it(`should return an appropriate response: '${testInput.message}'`, async () => {
             // Act
-            const messages = await ResponseMessageHandler.handleMessage(testInput.message, _guildId);
+            const messages = await ResponseHandler.handleMessage(testInput.message, _guildId);
 
             // Assert
             assert.ok(messages);
@@ -103,7 +103,7 @@ describe('response-message-handler', () => {
         var message = `this message should ${trigger} one of a random set`;
 
         // Act
-        const messages = await ResponseMessageHandler.handleMessage(message, _guildId);
+        const messages = await ResponseHandler.handleMessage(message, _guildId);
 
         // Assert
         assert.ok(messages);

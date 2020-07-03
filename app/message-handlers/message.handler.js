@@ -3,7 +3,7 @@ const config = require('../configuration/bot.config.json');
 const strings = require('../configuration/strings.json');
 const BotMentionHandler = require('./bot-mention.handler');
 const CommandHandler = require('./command.handler');
-const ResponseMessageHandler = require('./response-message-handler');
+const ResponseHandler = require('./response.handler');
 
 const sendMessages = (message, responseMessages, interval = (process.env.simulate_typing || config.simulateTyping) ? 1000 : 10) => {
     const maximumResponses = process.env.maximum_responses_per_message || config.maximumResponsesPerMessage;
@@ -64,7 +64,7 @@ module.exports = {
                 responseMessages = botMention
                     ? await BotMentionHandler.handleMessage(cleanMessage, guildId)
                     : await CommandHandler.handleMessage(cleanMessage)
-                        .then(results => results || ResponseMessageHandler.handleMessage(cleanMessage, guildId));
+                        .then(results => results || ResponseHandler.handleMessage(cleanMessage, guildId));
             }
     
             sendMessages(message, responseMessages);
