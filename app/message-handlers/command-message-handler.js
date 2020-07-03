@@ -8,12 +8,13 @@ const trim = (str, max) => ((str.length > max) ? `${str.slice(0, max - 3)}...` :
 
 module.exports = {
     handleMessage: async (message) => {
+        const cleanMessage = message.trim();
         try {
             const prefix = process.env.command_prefix || config.commandPrefix;
 
-            if (!message.startsWith(prefix)) return;
+            if (!cleanMessage.startsWith(prefix)) return;
     
-            const args = message.slice(prefix.length).split(/ +/);
+            const args = cleanMessage.slice(prefix.length).split(/ +/);
             const command = args.shift().toLowerCase();
     
             if (command === 'urban') {
