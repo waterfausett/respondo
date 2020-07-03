@@ -54,7 +54,7 @@ describe('bot-message-handler', () => {
             'triggers  ',
             '  triggers  '
         ].forEach(message => {
-            it(`should return triggers: "${message}"`, async () => {
+            it(`should return triggers: '${message}'`, async () => {
                 // Arrange
                 mockTriggerService.expects('getTriggers').returns(guildTriggers)
                 
@@ -92,7 +92,7 @@ describe('bot-message-handler', () => {
             {command: 'add', trigger: 'HeLlo', response: 'world'},
         ].forEach((testInput) => {
             const message = `${testInput.command} ${testInput.trigger} | ${testInput.response}`;
-            it(`should add response: "${message}"`, async () => {
+            it(`should add response: '${message}'`, async () => {
                 // Arrange
                 mockTriggerService.expects('addResponse')
                     .withArgs(_guildId, testInput.trigger.toLowerCase(), testInput.response)
@@ -129,7 +129,7 @@ describe('bot-message-handler', () => {
             {command: 'remove', trigger: 'HeLlo', response: 'world'},
         ].forEach((testInput) => {
             const message = `${testInput.command} ${testInput.trigger} | ${testInput.response}`;
-            it(`should remove response: "${message}"`, async () => {
+            it(`should remove response: '${message}'`, async () => {
                 // Arrange
                 mockTriggerService.expects('removeResponse').withArgs(_guildId, testInput.trigger.toLowerCase(), testInput.response);
                 mockTriggerService.expects('removeTrigger').never();
@@ -152,7 +152,7 @@ describe('bot-message-handler', () => {
             {command: 'remove', trigger: 'HeLlo'},
         ].forEach((testInput) => {
             const message = `${testInput.command} ${testInput.trigger}`;
-            it(`should remove trigger: "${message}"`, async () => {
+            it(`should remove trigger: '${message}'`, async () => {
                 // Arrange
                 mockTriggerService.expects('removeTrigger').withArgs(_guildId, testInput.trigger.toLowerCase());
                 mockTriggerService.expects('removeResponse').never();
