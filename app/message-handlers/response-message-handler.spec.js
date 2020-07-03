@@ -53,7 +53,7 @@ describe('response-message-handler', () => {
     ['trigger1', ' trigger1 ', 'trigger1?', 'trigger1 test', 'test trigger1', 'another trigger1 test', 'trigger4',
     'TRIGGER1', 'TrIGgEr1', 'some-trigger1', 'trigger1-thing', 'this is a trigger that is a phrase, bet you did not see that comeing']
         .forEach((message) => {
-            it(`should recognize triggers: ${message}`, async () => {
+            it(`should recognize triggers: '${message}'`, async () => {
                 // Act
                 const messages = await ResponseMessageHandler.handleMessage(message, _guildId);
 
@@ -65,7 +65,7 @@ describe('response-message-handler', () => {
 
     ['', ' ', 'sometrigger1 test', 'test trigger1thing', 'another sometrigger1thing test', 'this is a trigger that has a phrase']
         .forEach((message) => {
-            it(`should not have false positives: ${message}`, async () => {
+            it(`should not have false positives: '${message}'`, async () => {
                 // Act
                 const messages = await ResponseMessageHandler.handleMessage(message, _guildId);
 
@@ -86,7 +86,7 @@ describe('response-message-handler', () => {
         { message: 'trigger7', expectedResponses: [['hello there', new Discord.MessageAttachment('https://meme.factory.com/giphy.gif')]] },
     ]
     .forEach((testInput) => {
-        it(`should return an appropriate response: ${testInput.message}`, async () => {
+        it(`should return an appropriate response: '${testInput.message}'`, async () => {
             // Act
             const messages = await ResponseMessageHandler.handleMessage(testInput.message, _guildId);
 
