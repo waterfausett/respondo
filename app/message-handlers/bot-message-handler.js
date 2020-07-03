@@ -106,7 +106,7 @@ function getHelp() {
             }
         ]);
 
-    return [embed];
+    return Promise.resolve([embed]);
 }
 
 module.exports = {
@@ -130,7 +130,7 @@ module.exports = {
                 return removeResponse(guildId, cmdArgs);
             default: 
                 logger.warn({t: 'INVALID_REQUEST', guildId, message});
-                return [strings.invalid_request];
+                return Promise.resolve([strings.invalid_request]);
         }
     }
 };

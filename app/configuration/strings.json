@@ -2,6 +2,7 @@
     "invalid_request": "Oops!...I'm not quite sure what you're asking me to do :head_bandage:",
     "coming_soon": "eh...maybe there'll be a meaningful response to this request one day ¯\\_(ツ)_/¯",
     "got_it": "Got it :sunglasses:",
+    "idk_what_you_mean": ":thinking_face: I'm not sure what you mean...",
 
     "responses_list": "Here is a list of triggers/responses I know about",
     "responses_search": "Here's some more info about the triggers you asked about",

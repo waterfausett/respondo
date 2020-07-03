@@ -22,24 +22,35 @@ bot.on('message', async (message) => {
     if (message.author.bot) return;
 
     try {
-        const guildId = message.guild.id;
         const botMentionPattern = new RegExp(`<@.?${bot.user.id}>`)
         const botMention = message.mentions.users.has(bot.user.id) || message.content.match(botMentionPattern);
         
-        const messageArgs = message.content
+        const cleanMessage = message.content
             .split(' ') // split into array of words
             .filter(x => !x.match(botMentionPattern)) // filters out bot mentions
             .join(' '); // put the sentence back together
     
-        const responseMessages = botMention
-            ? await BotMessageHandler.handleMessage(messageArgs, guildId)
-            : await CommandMessageHandler.handleMessage(messageArgs)
-                .then(results => results || ResponseMessageHandler.handleMessage(messageArgs, guildId));
+        const guildId = message.guild ? message.guild.id : null;
+
+        let responseMessages;
+        if (!guildId) {
+            responseMessages = await CommandMessageHandler.handleMessage(cleanMessage)
+                .then(results => results || 
+                    BotMessageHandler.handleMessage('?')
+                        .then(results => [[strings.idk_what_you_mean, ...results]]));
+        }
+        else {
+            responseMessages = botMention
+                ? await BotMessageHandler.handleMessage(cleanMessage, guildId)
+                : await CommandMessageHandler.handleMessage(cleanMessage)
+                    .then(results => results || ResponseMessageHandler.handleMessage(cleanMessage, guildId));
+        }
 
         sendMessages(message, responseMessages);
     } catch (error) {
-        logger.error(`Failed to process a message: ${message.content}`);
-        logger.error(error);
+        console.log(error);
+        
+        logger.error(`Failed to process a message: ${message.content}\n`, error);
         sendMessages(message, [strings.error]);
     }
 });
@@ -53,6 +64,9 @@ bot.on('error', function(errMsg, code) {
     logger.warn('Error');
     logger.warn(errMsg, code);
 });
+
+async function processDirectMessage(message) {
+}
 
 function sendMessages(message, responseMessages, interval = (process.env.simulate_typing || config.simulateTyping) ? 1000 : 10) {
     const maximumResponses = process.env.maximum_responses_per_message || config.maximumResponsesPerMessage;
