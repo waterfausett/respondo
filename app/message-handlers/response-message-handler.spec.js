@@ -21,19 +21,19 @@ describe('response-message-handler', () => {
             'trigger3_response1',
             'trigger3_response2'
         ],
-        'trigGeR4': [
-            'trigger4_ReSpOnSe1'
+        'mUlTIcase_TrigGeR': [
+            'multicase_trigger_ReSpOnSe1'
         ],
         'trigger that is a phrase': [
             'trigger_phrase_response1'
         ],
-        'trigger5': [
+        'attachment_trigger': [
             'https://meme.factory.com/giphy.gif'
         ],
-        'trigger6': [
+        'text_attachment_trigger': [
             'hello there https://meme.factory.com/giphy.gif'
         ],
-        'trigger7': [
+        'attachment_text_trigger': [
             'hello https://meme.factory.com/giphy.gif there'
         ]
     };
@@ -50,7 +50,7 @@ describe('response-message-handler', () => {
         assert.ok(ResponseMessageHandler);
     });
 
-    ['trigger1', ' trigger1 ', 'trigger1?', 'trigger1 test', 'trigger1! test', 'test trigger1', 'another trigger1 test', 'trigger4',
+    ['trigger1', ' trigger1 ', 'trigger1?', 'trigger1 test', 'trigger1! test', 'test trigger1', 'another trigger1 test', 'multicase_trigger',
     'TRIGGER1', 'TrIGgEr1', 'some-trigger1', 'trigger1-thing', '!trigger1', '!trigger1!', 'this is a trigger that is a phrase, bet you did not see that coming']
         .forEach((message) => {
             it(`should recognize triggers: '${message}'`, async () => {
@@ -80,10 +80,10 @@ describe('response-message-handler', () => {
         { message: 'trigger2', expectedResponses: ['trigger2_response1'] },
         { message: 'trigger that is a phrase', expectedResponses: ['trigger_phrase_response1'] },
         { message: 'trigger1 trigger2', expectedResponses: ['trigger1_response1', 'trigger2_response1'] },
-        { message: 'trigger4', expectedResponses: ['trigger4_ReSpOnSe1'] },
-        { message: 'trigger5', expectedResponses: [new Discord.MessageAttachment('https://meme.factory.com/giphy.gif')] },
-        { message: 'trigger6', expectedResponses: [['hello there', new Discord.MessageAttachment('https://meme.factory.com/giphy.gif')]] },
-        { message: 'trigger7', expectedResponses: [['hello there', new Discord.MessageAttachment('https://meme.factory.com/giphy.gif')]] },
+        { message: 'mUlTIcase_TrigGeR', expectedResponses: ['multicase_trigger_ReSpOnSe1'] },
+        { message: 'attachment_trigger', expectedResponses: [new Discord.MessageAttachment('https://meme.factory.com/giphy.gif')] },
+        { message: 'text_attachment_trigger', expectedResponses: [['hello there', new Discord.MessageAttachment('https://meme.factory.com/giphy.gif')]] },
+        { message: 'attachment_text_trigger', expectedResponses: [['hello there', new Discord.MessageAttachment('https://meme.factory.com/giphy.gif')]] },
     ]
     .forEach((testInput) => {
         it(`should return an appropriate response: '${testInput.message}'`, async () => {
