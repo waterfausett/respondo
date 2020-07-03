@@ -55,8 +55,6 @@ describe('command-message-handler', () => {
         assert.ifError(response);
     });
 
-    // TODO: perhaps a do nothing test
-
     describe(`${config.commandPrefix}urban`, () => {
         it('should fail with no args', async () => {
             // Arrange
@@ -108,6 +106,5 @@ describe('command-message-handler', () => {
             assert.ok(response);
             expect(response).includes('Failed trying to talk to Urban Dictionary :cry:');
         });
-        
     });
 });
