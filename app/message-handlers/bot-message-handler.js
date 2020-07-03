@@ -111,7 +111,7 @@ function getHelp() {
 
 module.exports = {
     handleMessage: (message, guildId) => {
-        const args = message.split(' ');
+        const args = message.trim().split(' ');
         const cmd = args.shift();
     
         const cmdArgs = args.join(' ').split('|').map(x => x.trim()).filter(x => x);

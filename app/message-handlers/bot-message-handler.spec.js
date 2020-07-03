@@ -46,17 +46,25 @@ describe('bot-message-handler', () => {
     });
 
     describe('getTriggers', () => {
-        it('should return triggers', async () => {
-            // Arrange
-            const message = 'triggers';
-            mockTriggerService.expects('getTriggers').returns(guildTriggers)
-            
-            // Act
-            const response = await BotMessageHandler.handleMessage(message, _guildId);
-
-            // Assert
-            assert.ok(response);
-            expect(response).not.deep.includes(strings.triggers_none);
+        [
+            'triggers',
+            ' triggers',
+            '  triggers',
+            'triggers ',
+            'triggers  ',
+            '  triggers  '
+        ].forEach(message => {
+            it(`should return triggers: "${message}"`, async () => {
+                // Arrange
+                mockTriggerService.expects('getTriggers').returns(guildTriggers)
+                
+                // Act
+                const response = await BotMessageHandler.handleMessage(message, _guildId);
+    
+                // Assert
+                assert.ok(response);
+                expect(response).not.deep.includes(strings.triggers_none);
+            });
         });
     });
 
@@ -83,9 +91,9 @@ describe('bot-message-handler', () => {
             {command: 'AdD', trigger: 'hello', response: 'world'},
             {command: 'add', trigger: 'HeLlo', response: 'world'},
         ].forEach((testInput) => {
-            it('should add response', async () => {
+            const message = `${testInput.command} ${testInput.trigger} | ${testInput.response}`;
+            it(`should add response: "${message}"`, async () => {
                 // Arrange
-                const message = `${testInput.command} ${testInput.trigger} | ${testInput.response}`;
                 mockTriggerService.expects('addResponse')
                     .withArgs(_guildId, testInput.trigger.toLowerCase(), testInput.response)
                     .returns(123);
@@ -120,9 +128,9 @@ describe('bot-message-handler', () => {
             {command: 'ReMoVe', trigger: 'hello', response: 'world'},
             {command: 'remove', trigger: 'HeLlo', response: 'world'},
         ].forEach((testInput) => {
-            it('should remove response', async () => {
+            const message = `${testInput.command} ${testInput.trigger} | ${testInput.response}`;
+            it(`should remove response: "${message}"`, async () => {
                 // Arrange
-                const message = `${testInput.command} ${testInput.trigger} | ${testInput.response}`;
                 mockTriggerService.expects('removeResponse').withArgs(_guildId, testInput.trigger.toLowerCase(), testInput.response);
                 mockTriggerService.expects('removeTrigger').never();
                 
@@ -143,9 +151,9 @@ describe('bot-message-handler', () => {
             {command: 'ReMoVe', trigger: 'hello'},
             {command: 'remove', trigger: 'HeLlo'},
         ].forEach((testInput) => {
-            it('should remove trigger', async () => {
+            const message = `${testInput.command} ${testInput.trigger}`;
+            it(`should remove trigger: "${message}"`, async () => {
                 // Arrange
-                const message = `${testInput.command} ${testInput.trigger}`;
                 mockTriggerService.expects('removeTrigger').withArgs(_guildId, testInput.trigger.toLowerCase());
                 mockTriggerService.expects('removeResponse').never();
                 
