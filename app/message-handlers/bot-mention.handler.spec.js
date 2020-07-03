@@ -2,14 +2,14 @@ const sinon = require('sinon');
 const assert = require('assert');
 const { expect } = require('chai');
 
-const BotMessageHandler = require('./bot-message-handler');
+const BotMentionHandler = require('./bot-mention.handler');
 const triggerService = require('../services/trigger.service');
 const strings = require('../configuration/strings.json');
 
 let sandbox = sinon.createSandbox();
 const _guildId = 'guild1';
 
-describe('bot-message-handler', () => {
+describe('bot-mention.handler', () => {
     const guildConfig = {
         'trigger1': [
             'trigger1_response1'
@@ -42,7 +42,7 @@ describe('bot-message-handler', () => {
     });
 
     it('should be created', () => {
-        assert.ok(BotMessageHandler);
+        assert.ok(BotMentionHandler);
     });
 
     describe('getTriggers', () => {
@@ -59,7 +59,7 @@ describe('bot-message-handler', () => {
                 mockTriggerService.expects('getTriggers').returns(guildTriggers)
                 
                 // Act
-                const response = await BotMessageHandler.handleMessage(message, _guildId);
+                const response = await BotMentionHandler.handleMessage(message, _guildId);
     
                 // Assert
                 assert.ok(response);
@@ -75,7 +75,7 @@ describe('bot-message-handler', () => {
             mockTriggerService.expects('searchResponses').returns(guildConfig);
             
             // Act
-            const response = await BotMessageHandler.handleMessage(message, _guildId);
+            const response = await BotMentionHandler.handleMessage(message, _guildId);
 
             // Assert
             assert.ok(response);
@@ -99,7 +99,7 @@ describe('bot-message-handler', () => {
                     .returns(123);
                 
                 // Act
-                const response = await BotMessageHandler.handleMessage(message, _guildId);
+                const response = await BotMentionHandler.handleMessage(message, _guildId);
 
                 // Assert
                 assert.ok(response);
@@ -113,7 +113,7 @@ describe('bot-message-handler', () => {
             mockTriggerService.expects('addResponse').throws({constraint: 'UX_Trigger_Response_GuildId'});
 
             // Act
-            const response = await BotMessageHandler.handleMessage(message, _guildId);
+            const response = await BotMentionHandler.handleMessage(message, _guildId);
 
             // Assert
             assert.ok(response);
@@ -135,7 +135,7 @@ describe('bot-message-handler', () => {
                 mockTriggerService.expects('removeTrigger').never();
                 
                 // Act
-                const response = await BotMessageHandler.handleMessage(message, _guildId);
+                const response = await BotMentionHandler.handleMessage(message, _guildId);
 
                 // Assert
                 assert.ok(response);
@@ -158,7 +158,7 @@ describe('bot-message-handler', () => {
                 mockTriggerService.expects('removeResponse').never();
                 
                 // Act
-                const response = await BotMessageHandler.handleMessage(message, _guildId);
+                const response = await BotMentionHandler.handleMessage(message, _guildId);
     
                 // Assert
                 assert.ok(response);

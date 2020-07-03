@@ -1,7 +1,7 @@
 const logger = require('../services/logger.service');
 const config = require('../configuration/bot.config.json');
 const strings = require('../configuration/strings.json');
-const BotMessageHandler = require('./bot-message-handler');
+const BotMentionHandler = require('./bot-mention.handler');
 const CommandMessageHandler = require('./command-message-handler');
 const ResponseMessageHandler = require('./response-message-handler');
 
@@ -56,13 +56,13 @@ module.exports = {
             if (!guildId) {
                 responseMessages = await CommandMessageHandler.handleMessage(cleanMessage)
                     .then(results => results || 
-                        BotMessageHandler.handleMessage('?')
+                        BotMentionHandler.handleMessage('?')
                             .then(results => [[strings.idk_what_you_mean, ...results]]));
             }
             else {
                 const botMention = message.mentions.users.has(botUser.id) || message.content.match(botMentionPattern);
                 responseMessages = botMention
-                    ? await BotMessageHandler.handleMessage(cleanMessage, guildId)
+                    ? await BotMentionHandler.handleMessage(cleanMessage, guildId)
                     : await CommandMessageHandler.handleMessage(cleanMessage)
                         .then(results => results || ResponseMessageHandler.handleMessage(cleanMessage, guildId));
             }
