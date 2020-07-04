@@ -4,6 +4,7 @@ const strings = require('../configuration/strings.json');
 const BotMentionHandler = require('./bot-mention.handler');
 const DirectMessageHandler = require('./direct-message.handler');
 const GuildMessageHanlder = require('./guild-message.handler');
+const { Util } = require('discord.js');
 
 const sendMessages = (message, responseMessages, interval = (process.env.simulate_typing || config.simulateTyping) ? 1000 : 10) => {
     const maximumResponses = process.env.maximum_responses_per_message || config.maximumResponsesPerMessage;
@@ -47,11 +48,8 @@ module.exports = {
             const botMentionPattern = new RegExp(`<@.?${botUser.id}>`);
             const isBotMention = message.mentions.has(botUser) || message.content.match(botMentionPattern);
 
-            // Q: Discord.Util.cleanContent(cleanMessage, message) -- this would replace user/channel mentions w/ equivalent text
-            const cleanMessage = message.content
-                .split(' ') // split into array of words
-                .filter(x => !x.match(botMentionPattern)) // filters out bot mentions
-                .join(' '); // put the sentence back together
+            const cleanMessage = 
+                Util.cleanContent(message.content.split(' ').filter(x => !x.match(botMentionPattern)).join(' '), message);
     
             const responseMessages = !guildId
                 ? await DirectMessageHandler.handleMessage(cleanMessage)

@@ -31,6 +31,8 @@ describe('message.handler', () => {
         mockGuildMessageHandler = sandbox.mock(GuildMessageHanlder);
         mockDirectMessageHandler = sandbox.mock(DirectMessageHandler);
 
+        sandbox.stub(Discord.Util, 'cleanContent');
+
         message = sandbox.createStubInstance(Discord.Message);
         message.content = '';
         message.author = sandbox.createStubInstance(Discord.User)
