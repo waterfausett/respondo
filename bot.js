@@ -21,6 +21,8 @@ bot.on('disconnect', function(errMsg, code) {
     logger.warn(errMsg, code);
 });
 
+bot.on('warn', (warning) => logger.warn(warning));
+
 bot.on('error', function(errMsg, code) { 
     logger.warn('Error');
     logger.warn(errMsg, code);
