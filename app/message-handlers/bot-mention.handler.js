@@ -129,7 +129,7 @@ module.exports = {
             case 'REMOVE':
                 return removeResponse(guildId, cmdArgs);
             default: 
-                logger.warn({t: 'INVALID_REQUEST', guildId, message});
+                logger.warn('INVALID_REQUEST', {guildId, text: message});
                 return Promise.resolve([strings.invalid_request]);
         }
     }
