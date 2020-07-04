@@ -2,8 +2,8 @@ const logger = require('../services/logger.service');
 const config = require('../configuration/bot.config.json');
 const strings = require('../configuration/strings.json');
 const BotMentionHandler = require('./bot-mention.handler');
-const CommandHandler = require('./command.handler');
-const ResponseHandler = require('./response.handler');
+const DirectMessageHandler = require('./direct-message.hanlder');
+const GuildMessageHanlder = require('./guild-message.handler');
 
 const sendMessages = (message, responseMessages, interval = (process.env.simulate_typing || config.simulateTyping) ? 1000 : 10) => {
     const maximumResponses = process.env.maximum_responses_per_message || config.maximumResponsesPerMessage;
@@ -43,33 +43,25 @@ module.exports = {
         if (message.author.bot) return;
 
         try {
-            const botMentionPattern = new RegExp(`<@.?${botUser.id}>`)
-            
+            const guildId = message.guild ? message.guild.id : null;
+            const botMentionPattern = new RegExp(`<@.?${botUser.id}>`);
+            const isBotMention = message.mentions.has(botUser) || message.content.match(botMentionPattern);
+
+            // Q: Discord.Util.cleanContent(cleanMessage, message) -- this would replace user/channel mentions w/ equivalent text
             const cleanMessage = message.content
                 .split(' ') // split into array of words
                 .filter(x => !x.match(botMentionPattern)) // filters out bot mentions
                 .join(' '); // put the sentence back together
-        
-            const guildId = message.guild ? message.guild.id : null;
     
-            let responseMessages;
-            if (!guildId) {
-                responseMessages = await CommandHandler.handleMessage(cleanMessage)
-                    .then(results => results || 
-                        BotMentionHandler.handleMessage('?')
-                            .then(results => [[strings.idk_what_you_mean, ...results]]));
-            }
-            else {
-                const botMention = message.mentions.users.has(botUser.id) || message.content.match(botMentionPattern);
-                responseMessages = botMention
-                    ? await BotMentionHandler.handleMessage(cleanMessage, guildId)
-                    : await CommandHandler.handleMessage(cleanMessage)
-                        .then(results => results || ResponseHandler.handleMessage(cleanMessage, guildId));
-            }
-    
+            const responseMessages = !guildId
+                ? await DirectMessageHandler.handleMessage(cleanMessage)
+                : isBotMention 
+                    ? await BotMentionHandler.handleMessage(cleanMessage, guildId) 
+                    : await GuildMessageHanlder.handleMessage(cleanMessage, guildId);
+
             sendMessages(message, responseMessages);
         } catch (error) {
-            logger.error(`Failed to process a message: ${message.content}\n`, error);
+            logger.error(`Failed to process a message: ${message.content}\n\t`, error);
             sendMessages(message, [strings.error]);
         }
     }    
