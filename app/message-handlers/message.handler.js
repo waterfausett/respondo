@@ -2,7 +2,7 @@ const logger = require('../services/logger.service');
 const config = require('../configuration/bot.config.json');
 const strings = require('../configuration/strings.json');
 const BotMentionHandler = require('./bot-mention.handler');
-const DirectMessageHandler = require('./direct-message.hanlder');
+const DirectMessageHandler = require('./direct-message.handler');
 const GuildMessageHanlder = require('./guild-message.handler');
 
 const sendMessages = (message, responseMessages, interval = (process.env.simulate_typing || config.simulateTyping) ? 1000 : 10) => {

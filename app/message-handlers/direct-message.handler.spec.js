@@ -1,7 +1,7 @@
 const sinon = require('sinon');
 const { expect, assert } = require('chai');
 
-const DirectMessageHandler = require('./direct-message.hanlder');
+const DirectMessageHandler = require('./direct-message.handler');
 
 const logger = require('../services/logger.service');
 const strings = require('../configuration/strings.json');
