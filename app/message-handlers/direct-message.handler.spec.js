@@ -3,7 +3,6 @@ const { expect, assert } = require('chai');
 
 const DirectMessageHandler = require('./direct-message.hanlder');
 
-const Discord = require('discord.js');
 const logger = require('../services/logger.service');
 const strings = require('../configuration/strings.json');
 const BotMentionHandler = require('./bot-mention.handler');
