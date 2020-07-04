@@ -1,11 +1,10 @@
 const sinon = require('sinon');
-const { expect, assert } = require('chai');
+const { assert } = require('chai');
 
 const MessageHandler = require('./message.handler');
 
 const Discord = require('discord.js');
 const logger = require('../services/logger.service');
-const config = require('../configuration/bot.config.json');
 const strings = require('../configuration/strings.json');
 const BotMentionHandler = require('./bot-mention.handler');
 const DirectMessageHandler = require('./direct-message.hanlder');
@@ -32,22 +31,17 @@ describe.only('message.handler', () => {
         mockGuildMessageHandler = sandbox.mock(GuildMessageHanlder);
         mockDirectMessageHandler = sandbox.mock(DirectMessageHandler);
 
-        message = {
-            content: '',
-            author: { bot: false },
-            guild: { id: '654321' },
-            mentions1: {
-                has: sinon.stub().returns(false)
-            },
-            mentions: sandbox.createStubInstance(Discord.MessageMentions, {
-
-            }),
-            channel: {
-                startTyping: sinon.spy(),
-                stopTyping: sinon.spy(),
-                send: sinon.stub().resolves()
-            }
-        }
+        message = sandbox.createStubInstance(Discord.Message);
+        message.content = '';
+        message.author = sandbox.createStubInstance(Discord.User)
+        message.mentions = sandbox.createStubInstance(Discord.MessageMentions);
+        message.channel = sandbox.createStubInstance(Discord.TextChannel, {
+            send: sandbox.stub().resolves(),
+            startTyping: sandbox.spy(),
+            stopTyping: sandbox.spy()
+        });
+        message.channel.guild = sandbox.createStubInstance(Discord.Guild);
+        message.channel.guild.id = '654321';
     });
 
     afterEach(function () {
@@ -84,7 +78,7 @@ describe.only('message.handler', () => {
     describe('direct messages', () => {
         it(`should handle as DM when no guild is present`, async () => {
             // Arrange
-            message.guild = null;
+            message.channel.guild = null;
             mockDirectMessageHandler.expects('handleMessage');
             mockBotMentionHandler.expects('handleMessage').never();
             mockGuildMessageHandler.expects('handleMessage').never();
@@ -95,7 +89,7 @@ describe.only('message.handler', () => {
 
         it(`should send a message if returned`, async () => {
             // Arrange
-            message.guild = null;
+            message.channel.guild = null;
             mockDirectMessageHandler.expects('handleMessage').returns(['response']);
             mockBotMentionHandler.expects('handleMessage').never();
             mockGuildMessageHandler.expects('handleMessage').never();
@@ -110,7 +104,7 @@ describe.only('message.handler', () => {
 
         it(`should not send a message if nothing returned`, async () => {
             // Arrange
-            message.guild = null;
+            message.channel.guild = null;
             mockDirectMessageHandler.expects('handleMessage');
             mockBotMentionHandler.expects('handleMessage').never();
             mockGuildMessageHandler.expects('handleMessage').never();
