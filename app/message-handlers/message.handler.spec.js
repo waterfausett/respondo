@@ -37,6 +37,7 @@ describe('message.handler', () => {
         message.content = '';
         message.author = sandbox.createStubInstance(Discord.User)
         message.mentions = sandbox.createStubInstance(Discord.MessageMentions);
+        message.mentions.users = sandbox.createStubInstance(Discord.Collection);
         message.channel = sandbox.createStubInstance(Discord.TextChannel, {
             send: sandbox.stub().resolves(),
             startTyping: sandbox.spy(),
@@ -122,7 +123,7 @@ describe('message.handler', () => {
     describe('bot mentions', () => {
         it(`should handle as BotMention when the bot is mentioned (mentions)`, async () => {
             // Arrange
-            message.mentions.has = sandbox.stub().returns(true);
+            message.mentions.users.has = sandbox.stub().returns(true);
             mockBotMentionHandler.expects('handleMessage');
             mockDirectMessageHandler.expects('handleMessage').never();
             mockGuildMessageHandler.expects('handleMessage').never();
@@ -150,7 +151,7 @@ describe('message.handler', () => {
 
         it(`should send a message if returned`, async () => {
             // Arrange
-            message.mentions.has = sinon.stub().returns(true);
+            message.mentions.users.has = sinon.stub().returns(true);
             mockBotMentionHandler.expects('handleMessage').returns(['response']);
             mockDirectMessageHandler.expects('handleMessage').never();
             mockGuildMessageHandler.expects('handleMessage').never();
@@ -165,7 +166,7 @@ describe('message.handler', () => {
 
         it(`should not send a message if nothing returned`, async () => {
             // Arrange
-            message.mentions.has = sinon.stub().returns(true);
+            message.mentions.users.has = sinon.stub().returns(true);
             mockBotMentionHandler.expects('handleMessage');
             mockDirectMessageHandler.expects('handleMessage').never();
             mockGuildMessageHandler.expects('handleMessage').never();

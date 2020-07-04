@@ -46,7 +46,7 @@ module.exports = {
         try {
             const guildId = message.guild ? message.guild.id : null;
             const botMentionPattern = new RegExp(`<@.?${botUser.id}>`);
-            const isBotMention = message.mentions.has(botUser) || message.content.match(botMentionPattern);
+            const isBotMention = message.mentions.users.has(botUser) || message.content.match(botMentionPattern);
 
             const cleanMessage = 
                 Util.cleanContent(message.content.split(' ').filter(x => !x.match(botMentionPattern)).join(' '), message);
