@@ -12,7 +12,7 @@ const GuildMessageHanlder = require('./guild-message.handler');
 
 let sandbox = sinon.createSandbox();
 
-describe.only('message.handler', () => {
+describe('message.handler', () => {
     const botUser = { id: '123456' };
 
     let mockBotMentionHandler,
