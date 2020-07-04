@@ -73,7 +73,7 @@ describe('message.handler', () => {
 
         // Assert
         assert.isTrue(message.channel.send.withArgs(strings.error).called);
-    })
+    });
 
     describe('direct messages', () => {
         it(`should handle as DM when no guild is present`, async () => {
