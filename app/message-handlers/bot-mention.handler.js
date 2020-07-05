@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const config = require('../configuration/bot.config.json');
 const strings = require('../configuration/strings.json');
 const logger = require('../services/logger.service');
 const triggerService = require('../services/trigger.service');
@@ -76,6 +77,7 @@ async function removeResponse(guildId, args) {
 }
 
 function getHelp() {
+    const prefix = process.env.command_prefix || config.commandPrefix;
     const embed = new Discord.MessageEmbed()
         .setTitle(`Here's some info about the commands I understand:`)
         .addFields([
@@ -97,6 +99,11 @@ function getHelp() {
             {
                 name: 'remove',
                 value: strings.remove_help,
+                inline: false
+            },
+            {
+                name: `${prefix}urban`,
+                value: strings.command_urban_help.replace('{prefix}', prefix),
                 inline: false
             },
             {

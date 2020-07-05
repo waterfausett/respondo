@@ -22,6 +22,8 @@
     
     "remove_help": "Remove a specific response for a trigger, or get rid of the trigger altogether\n  - just @ me, then say something like, \"remove [trigger] | [response]\"\n    - to remove a trigger entirely, just say \"remove [trigger]\"",
 
+    "command_urban_help": "Search urban dictionary\n - \"{prefix}urban [search phrase]\"",
+
     "help_notes": "`triggers` are case insensitive (meaning \"cat\" will match: cat, CAT, cAt, etc.), \n but I'll give your `responses` back just like you enter them.",
 
     "error": ":rotating_light: :head_bandage: Not sure what happened, but that didn't work...\n- if you see this a lot, maybe you should reach out to my creator"
